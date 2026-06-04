@@ -12,7 +12,7 @@
 [Youtube](https://www.youtube.com/@DrRosploitnik)
 
 ## How to Use
-1. Download the specific scripting application of your choice.
+1. Download the "specific scripting application" of your choice.
 2. Execute the loadstring that is provided down below.
 ```luau
 loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/main/Main.lua", true))()
@@ -20,6 +20,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 ## Developers & Credits
 [Desognedby](https://github.com/desognedbyjonturtletaub)   - Joint Account
 <br/>
-[lelogint](https://github.com/lelogint)   -Programmer, Ui Designer
+[``lelogint``](https://github.com/lelogint)   -Programmer, Ui Designer
 <br/>
-[Pinecone Gaming](https://github.com/pineconegaming12)   -Sound Provider Of Project, Ui Designer
+[``Pinecone Gaming``](https://github.com/pineconegaming12)   -Sound Provider Of Project, Ui Designer
