@@ -8,7 +8,7 @@
 An all-purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
 <h2/>
 
-##Contacts
+## Contacts
 <br/>
 [Discord](https://discord.gg/hEtNp7WU)
 <br/>
