@@ -18,7 +18,7 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/main/Main.lua", true))()
 ````
 ## Developers & Credits
-[Desognedby](https://github.com/desognedbyjonturtletaub)   - Joint Account
+[``Desognedby``](https://github.com/desognedbyjonturtletaub)   - Joint Account
 <br/>
 [``lelogint``](https://github.com/lelogint)   -Programmer, Ui Designer
 <br/>
