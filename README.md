@@ -22,4 +22,4 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 <br/>
 [``lelogint``](https://github.com/lelogint)   -Programmer, Ui Designer
 <br/>
-[``Eclipse``](https://github.com/pineconegaming12)   -Sound Provider Of Project, Ui Designer
+[``Eclipse``](https://github.com/Eclipse-h2)   -Sound Provider Of Project, Ui Designer
