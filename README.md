@@ -20,6 +20,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 ## Developers & Credits
 [Desognedby](https://github.com/desognedbyjonturtletaub)   - Joint Account
 <br/>
-[lelognt](https://github.com/lelognt)   -Programmer, Ui Designer
+[lelogint](https://github.com/lelogint)   -Programmer, Ui Designer
 <br/>
 [Pinecone Gaming](https://github.com/pineconegaming12)   -Sound Provider Of Project, Ui Designer
