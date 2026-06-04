@@ -16,7 +16,7 @@ An all-purpose Roblox client-sided script that will meet all your Ro-sploiting n
 
 ## How to Use
 1. Download the specific scripting application of your choice.
-2. Execute the loadstring that is provided dwon below.
+2. Execute the loadstring that is provided down below.
 ```luau
 loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/main/Main.lua", true))()
 ````
