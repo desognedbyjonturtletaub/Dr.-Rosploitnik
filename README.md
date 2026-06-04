@@ -21,7 +21,7 @@ An all-purpose Roblox client-sided script that will meet all your Ro-sploiting n
 loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/main/Main.lua", true))()
 ````
 ## Developers & Credits
-Joint Account > [Desognedby](https://github.com/desognedbyjonturtletaub) 
+[Desognedby](https://github.com/desognedbyjonturtletaub)   - Joint Account
 <br/>
 [lelognt](https://github.com/lelognt)   -Programmer, Ui Designer
 <br/>
