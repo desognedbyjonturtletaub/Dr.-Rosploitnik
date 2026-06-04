@@ -3,13 +3,11 @@
 </p>
 
 <h2 align="centre">
-  # Dr.-Rosploitnik
-  <br/>
-An all-purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
-<h2/>
+   Dr.Rosploitnik
 
+  An all purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
+  
 ## Contacts
-<br/>
 [Discord](https://discord.gg/hEtNp7WU)
 <br/>
 [Youtube](https://www.youtube.com/@DrRosploitnik)
