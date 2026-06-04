@@ -1,12 +1,11 @@
 <p align="center">
   <img src="README/images/Rosploitnik Banner.png" alt="Dr Rosploitnik Banner" width="100%">
 </p>
-
 <h2 align="centre">
-   Dr.Rosploitnik
-
+   Dr.Rosploitnik </h2>
   An all purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
-  
+</h2>
+
 ## Contacts
 [Discord](https://discord.gg/hEtNp7WU)
 <br/>
