@@ -1,4 +1,4 @@
-config = {
+return {
 	main = {
 		Self = nil,
 		Type = "ScreenGui",
