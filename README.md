@@ -7,7 +7,7 @@
 </h2>
 
 ## Contacts
-[Discord](https://discord.gg/RkmZkQUT8f)
+[Discord](https://discord.gg/ACQGysdVkd)
 <br/>
 [Youtube](https://www.youtube.com/@DrRosploitnik)
 
