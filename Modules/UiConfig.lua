@@ -5,6 +5,7 @@ return {
 		Parent = "PlayerGui",
 		Name = "Main",
 		IgnoreGuiInset = true,
+		ResetOnSpawn = false,
 	},
 	frame = {
 		Self = nil,
