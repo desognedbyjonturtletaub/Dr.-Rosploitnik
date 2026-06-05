@@ -1,6 +1,6 @@
 local players = cloneref(game:GetService('Players'))
 local runService = cloneref(game:GetService("RunService"))
-local httpService = clonref(game:GetService("HttpService"))
+local httpService = cloneref(game:GetService("HttpService"))
 local replicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
 local tweenService = cloneref(game:GetService("TweenService"))
 local userInputService = cloneref(game:GetService("UserInputService"))
