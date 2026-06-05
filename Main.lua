@@ -1,5 +1,6 @@
 local players = cloneref(game:GetService('Players'))
 local runService = cloneref(game:GetService("RunService"))
+local httpService = clonref(game:GetService("HttpService"))
 local replicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
 local tweenService = cloneref(game:GetService("TweenService"))
 local userInputService = cloneref(game:GetService("UserInputService"))
@@ -499,15 +500,15 @@ function OnEsp(button)
 end
 
 -- Anim table, .Self = the :LoadAnimation()
-anims = HttpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua")
+anims = httpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua")
 -- Sounds table
-sounds = HttpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua")
+sounds = httpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua")
 -- Trails table to be instantiated later --
-trails = HttpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua")
+trails = httpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua")
 -- Particles table to be instantiated later --
-particles = HttpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua")
+particles = httpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua")
 -- Ui config table, edit properties in here and assign func to button functions --
-config = HttpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua")
+config = httpService:GetAsync("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua")
 
 function AnimationConstructor()
 	for i, v in pairs(anims) do
