@@ -1,4 +1,4 @@
-sounds = {
+return {
 	closeSound = {
 		SoundId = "rbxassetid://71159461717880",
 		Name = "Close",
