@@ -1,4 +1,4 @@
-trails =  {
+return  {
 	trail1 = {
 		Name = "Trail",
 		FaceCamera = true,
