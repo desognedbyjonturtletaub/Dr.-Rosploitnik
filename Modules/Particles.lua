@@ -1,4 +1,4 @@
-particles =  {
+return  {
 	explosion1 = {
 		Name = "Explosion1",
 		Brightness = 1,
