@@ -29,7 +29,7 @@ local particles = {}
 local trails = {}
 local sounds = {}
 
-print("12:23")
+print("12:26!!")
 -- This is for gathering player list for ESP highlights --
 for i = 1, #allInitialPlayers do
 	currentPlayerList[allInitialPlayers[i]] = true;
@@ -501,15 +501,15 @@ function OnEsp(button)
 end
 
 -- Anim table, .Self = the :LoadAnimation()
-anims = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua", true))()
+anims = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua"))
 -- Sounds table
-sounds = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua", true))()
+sounds = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua"))
 -- Trails table to be instantiated later --
-trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua", true))()
+trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua"))
 -- Particles table to be instantiated later --
-particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua", true))()
+particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua"))
 -- Ui config table, edit properties in here and assign func to button functions --
-config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua", true))()
+config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua"))
 
 
 function AnimationConstructor()
