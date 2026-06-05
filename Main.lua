@@ -398,10 +398,12 @@ function OnSpeed(button)
 								trail2[i] = v
 							end
 							-- Shockwave --
+							local attachment = Instance.new("Attachment")
+							attachment.Parent = hrp
 							local shockwaveParticle = particlesFolder:FindFirstChild("Shockwave1"):Clone()
 							shockwaveParticle:Emit(shockwaveParticle:GetAttribute("emitCount"))
-							shockwaveParticle.Parent = hrp.RootRigAttachment
-							debris:AddItem(shockwaveParticle, 0.3)
+							shockwaveParticle.Parent = attachment
+							debris:AddItem(attachment, 0.3)
 						if flightEnabled == false then
 							currentSpeed = -hrp.CFrame:VectorToObjectSpace(hrp.AssemblyLinearVelocity).Z
 						else
