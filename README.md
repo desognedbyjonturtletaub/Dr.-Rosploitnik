@@ -9,7 +9,7 @@
 ## Contacts
 [Discord](https://discord.gg/ACQGysdVkd)
 <br/>
-[Youtube](https://www.youtube.com/@DrRosploitnik)
+[Youtube](https://www.youtube.com/@DrRosploitnik-k)
 
 ## How to Use
 1. Download the "specific scripting application" of your choice.
