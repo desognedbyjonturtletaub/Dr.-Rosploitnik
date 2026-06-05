@@ -29,6 +29,7 @@ local particles = {}
 local trails = {}
 local sounds = {}
 
+print("11:13")
 -- This is for gathering player list for ESP highlights --
 for i = 1, #allInitialPlayers do
 	currentPlayerList[allInitialPlayers[i]] = true;
