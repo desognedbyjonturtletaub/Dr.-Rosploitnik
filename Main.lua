@@ -35,11 +35,20 @@ for i = 1, #allInitialPlayers do
 	currentPlayerList[allInitialPlayers[i]] = true;
 end
 
+function AnimationConstructor()
+	for i, v in pairs(anims) do
+		local animation = Instance.new("Animation")
+		animation.AnimationId = v["Id"]
+		v["Self"] = humanoid:LoadAnimation(animation)
+	end
+end
+
 player.CharacterAdded:Connect(function(char)
 	character = char
 	humanoid = character:WaitForChild("Humanoid")
 	hrp = character:WaitForChild("HumanoidRootPart")
 	defaultWalkSpeed = humanoid.WalkSpeed
+	AnimationConstructor()
 end)
 
 players.PlayerAdded:Connect(function(player)
@@ -512,15 +521,6 @@ trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjo
 particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua"))()
 -- Ui config table, edit properties in here and assign func to button functions --
 config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua"))()
-
-
-function AnimationConstructor()
-	for i, v in pairs(anims) do
-		local animation = Instance.new("Animation")
-		animation.AnimationId = v["Id"]
-		v["Self"] = humanoid:LoadAnimation(animation)
-	end
-end
 
 function ParticleConstructor()
 	local folder = Instance.new("Folder")
