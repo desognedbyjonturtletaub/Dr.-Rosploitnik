@@ -25,5 +25,16 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 [``Eclipse<h2``](https://github.com/Eclipse-h2)   -Sound Provider Of Project, Ui Designer
 <br>
 <h2>Previews:</h2>
-<img src='Previews/Screen2.png' width='33%' style='float: left;'> 
-<img src='Previews/Screen5.png' width='33%' style='float: left;'> 
+
+<table border="0">
+  <!-- TOP ROW -->
+  <tr>
+    <td><img src="Previews/Screen2.png" width="100%"></td>
+    <td><img src="Previews/Screen3.png" width="100%"></td>
+  </tr>
+  <!-- BOTTOM ROW -->
+  <tr>
+    <td><img src="Previews/Auto Spam.png" height="150%"></td>
+    <td><img src="Previews/Screen5.png" width="100%"></td>
+  </tr>
+</table>
