@@ -1,4 +1,4 @@
-return {
+anims = {
 	flyIdle = {
 		Self = nil,
 		Id = "rbxassetid://77529400769588"
