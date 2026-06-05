@@ -501,15 +501,15 @@ function OnEsp(button)
 end
 
 -- Anim table, .Self = the :LoadAnimation()
-anims = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua"))
+anims = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua"))()
 -- Sounds table
-sounds = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua"))
+sounds = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua"))()
 -- Trails table to be instantiated later --
-trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua"))
+trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua"))()
 -- Particles table to be instantiated later --
-particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua"))
+particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua"))()
 -- Ui config table, edit properties in here and assign func to button functions --
-config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua"))
+config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua"))()
 
 
 function AnimationConstructor()
