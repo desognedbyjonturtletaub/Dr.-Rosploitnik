@@ -28,10 +28,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 <tb>
   <tr>
     <td>
-      <img src='Previews/Screen2.png' width='33%'> 
+      <img src='Previews/Screen2.png' width='33%' style='float: left;'> 
     </td>
     <td>
-      <img src='Previews/Screen5.png' width='33%'> 
+      <img src='Previews/Screen5.png' width='33%' style='float: left;'> 
     </td>
   </tr>
   <tr>
