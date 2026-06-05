@@ -25,6 +25,22 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 [``Eclipse<h2``](https://github.com/Eclipse-h2)   -Sound Provider Of Project, Ui Designer
 <br>
 <h2>Previews:</h2>
-<img src='Previews/Screen2.png' width='50%'> 
-<img src='Previews/Screen5.png' width='50%'>
+<tb>
+  <tr>
+    <td>
+      <img src='Previews/Screen2.png' width='50%'> 
+    </td>
+    <td>
+      <img src='Previews/Screen5.png' width='50%'> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src='Previews/Screen2.png' width='50%'> 
+    </td>
+    <td>
+      <img src='Previews/Screen5.png' width='50%'> 
+    </td>
+  </tr>
+</tb>
 <br>
