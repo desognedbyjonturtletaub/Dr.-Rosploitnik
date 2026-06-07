@@ -347,7 +347,7 @@ local speedLoop = nil
 
 function SpeedDestroyEffects()
 	if hrp:FindFirstChild("RosploitnikSpeedAttachment") then
-		game.workspace.CurrentCamera.FieldOfView = 70
+		tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70}):Play()
 		soundsFolder.Wind:Pause()
 		hrp.RosploitnikSpeedAttachment.Speed1.Enabled = false
 		debris:AddItem(hrp.RosploitnikSpeedAttachment, 0.2)
@@ -374,7 +374,7 @@ function OnSpeed(button)
 			speedLoop = runService.Heartbeat:Connect(function(deltaTime)
 				local moveDir = humanoid.MoveDirection
 				if moveDir.Magnitude > 0 then
-						game.workspace.CurrentCamera.FieldOfView = 70 + (hrp.AssemblyLinearVelocity.Magnitude/17)
+						tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70 + math.clamp(hrp.AssemblyLinearVelocity.Magnitude/5, 0, 50)}):Play()
 					if currentSpeed == nil  then
 						soundsFolder.Wind:Resume()
 						-- Particle --
