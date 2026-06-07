@@ -7,7 +7,7 @@
 </h2>
 
 ## Contacts
-[Discord](https://discord.gg/ACQGysdVkd)
+[Discord Server](https://discord.gg/ACQGysdVkd)
 <br/>
 [Youtube](https://www.youtube.com/@DrRosploitnik-k)
 
