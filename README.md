@@ -7,11 +7,11 @@
 </h2>
 
 ## Contacts
-[Dr Rosploitnik Discrod Server](https://discord.gg/ACQGysdVkd)
+[Dr Rosploitnik Discord Server](https://discord.gg/ACQGysdVkd)
 <br/>
 [Dr Rosploitnik Youtube](https://www.youtube.com/@DrRosploitnik-k)
 <br/>
-[JONTURTLETAUB Youtube](https://www.youtube.com/@JONTURTLETAUB)
+[JonTurtleTaub Youtube](https://www.youtube.com/@JONTURTLETAUB)
 
 ## How to Use
 1. Download the "specific scripting application" of your choice.
