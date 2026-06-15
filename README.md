@@ -9,7 +9,9 @@
 ## Contacts
 [Discord Server](https://discord.gg/ACQGysdVkd)
 <br/>
-[Youtube](https://www.youtube.com/@DrRosploitnik-k)
+[Dr Rosploitnik Youtube](https://www.youtube.com/@DrRosploitnik-k)
+<br/>
+[Joint Youtube](https://www.youtube.com/@JONTURTLETAUB)
 
 ## How to Use
 1. Download the "specific scripting application" of your choice.
