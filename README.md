@@ -30,11 +30,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
   <!-- TOP ROW -->
   <tr>
     <td><img src="Previews/Screen2.png" width="100%"></td>
-    <td><img src="Previews/Screen3.png" width="100%"></td>
   </tr>
   <!-- BOTTOM ROW -->
   <tr>
-    <td><img src="Previews/Auto Spam.png" width="100%"></td>
     <td><img src="Previews/Screen5.png" width="100%"></td>
   </tr>
 </table>
