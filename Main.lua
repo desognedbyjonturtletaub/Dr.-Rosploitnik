@@ -198,7 +198,7 @@ function OnTeleport(button)
 						teleportSound.Parent = soundsFolder
 						teleportSound:Play()
 						debris:AddItem(teleportSound, 1)
-						hrp.Position = mouse.Hit.Position
+						hrp.CFrame = CFrame.new(mouse.Hit.Position) * hrp.CFrame.Rotation
 						local camType = Enum.CameraType.Custom
 						workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
 						task.wait(.1)
