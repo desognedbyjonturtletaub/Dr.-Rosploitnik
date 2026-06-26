@@ -13,6 +13,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local hrp = character:WaitForChild("HumanoidRootPart")
 
+local gitMain = "v0.0.8"
 local generalChannel = textChatService.TextChannels:WaitForChild("RBXGeneral")
 
 local holderDefaultSize = UDim2.new(0.194, 0, 0.461, 0)
@@ -602,7 +603,7 @@ function UiConstructor()
 					local gradient = Instance.new("UIGradient")
 					gradient.Color = ColorSequence.new{
 						ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
-						ColorSequenceKeypoint.new(1, Color3.fromRGB(97,101,135))
+						ColorSequenceKeypoint.new(1, Color3.fromRGB(124, 198, 211))
 					}
 					gradient.Rotation = 90
 					gradient.Parent = obj
