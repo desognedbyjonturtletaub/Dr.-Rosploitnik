@@ -215,7 +215,7 @@ end
 
 local playerTPEnabled = false
 function OnPlayerTeleport(button)
-	local text = "" -- Later change to player name from input text box (will be added after)
+	local text = ""
 	if button == nil then
 		return
 	end
