@@ -1,10 +1,10 @@
-local players = cloneref(game:GetService('Players'))
-local runService = cloneref(game:GetService("RunService"))
-local replicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
-local tweenService = cloneref(game:GetService("TweenService"))
-local userInputService = cloneref(game:GetService("UserInputService"))
-local textChatService = cloneref(game:GetService("TextChatService"))
-local debris = cloneref(game:GetService("Debris"))
+local players = game:GetService('Players')
+local runService = game:GetService("RunService")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local tweenService = game:GetService("TweenService")
+local userInputService = game:GetService("UserInputService")
+local textChatService = game:GetService("TextChatService")
+local debris = game:GetService("Debris")
 local player = players.LocalPlayer
 local mouse = player:GetMouse()
 local playerGui = player.PlayerGui
@@ -62,7 +62,7 @@ local uiGradientTypes = {
 
 local env = getfenv()
 local isFileFunc, writeFileFunc, getCustomAssetFunc = env.isfile, env.writefile, env.getcustomasset
-local gitMain = "https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/v0.1.0"
+local gitMain = "https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/0.1.0"
 local isStudio = game:GetService("RunService"):IsStudio()
 
 local images = {}
@@ -469,7 +469,6 @@ function OnSpeedHeartbeat(deltaTime)
 		tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70 + math.clamp(hrp.AssemblyLinearVelocity.Magnitude/5, 0, 50)}):Play()
 		if currentSpeed == nil  then
 			soundsFolder.Wind:Resume()
-			-- Particle --
 
 			local particleAttachment = Instance.new("Attachment")
 			particleAttachment.Parent = hrp
@@ -478,7 +477,7 @@ function OnSpeedHeartbeat(deltaTime)
 			speedParticle.Enabled = true
 			speedParticle.Parent = particleAttachment
 			soundsFolder.Boost:Play()
-			-- Trail --
+			
 			local trailAttachment1 = Instance.new("Attachment")
 			trailAttachment1.Parent = hrp
 			trailAttachment1.Name = "RosploitnikTrailAttachment1"
@@ -501,7 +500,7 @@ function OnSpeedHeartbeat(deltaTime)
 			for i, v in pairs(trails["trail2"]) do
 				trail2[i] = v
 			end
-			-- Shockwave --
+
 			local shockwaveParticle = particlesFolder:FindFirstChild("Shockwave1"):Clone()
 			shockwaveParticle:Emit(shockwaveParticle:GetAttribute("emitCount"))
 			shockwaveParticle.Parent = hrp.RootRigAttachment
@@ -646,7 +645,6 @@ anims = {
 	}
 }
 
---
 sounds = {
 	closeSound = {
 		SoundId = CreateFile("LoadingDrRosploitnikNow.mp3", gitMain.. "/Sounds/LoadingDrRosploitnikNow.mp3", "rbxassetid://71159461717880"),
@@ -722,7 +720,6 @@ sounds = {
 	}
 }
 
--- Trails table to be instantiated later --
 trails = {
 	trail1 = {
 		Name = "Trail",
@@ -751,7 +748,7 @@ trails = {
 		Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(0.3, 0.4), NumberSequenceKeypoint.new(1, 1)}
 	}
 }
--- Particles table to be instantiated later --
+
 particles = {
 	explosion1 = {
 		Name = "Explosion1",
@@ -864,7 +861,7 @@ particles = {
 	},
 }
 
-config = { -- indented so I can remember this fuckin absurd hierarc hy 
+config = { -- indented so I can remember this fuckin absurd hierarc hy - lelogint
 	main = {
 		Self = nil,
 		Type = "ScreenGui",
@@ -1206,872 +1203,6 @@ config = { -- indented so I can remember this fuckin absurd hierarc hy
 								Func = OnFloat,
 							}
 						},
-				
-}
-
-
--- Instance.new("People who are reading this script")
-
-config2 = {
-	main = {
-		Self = nil,
-		Type = "ScreenGui",
-		Parent = "PlayerGui",
-		Name = "Main",
-		IgnoreGuiInset = true,
-	},
-	frame = {
-		Self = nil,
-		Type = "Frame",
-		Parent = "main",
-		Name = "Frame",
-		AnchorPoint = Vector2.new(0.5,0.5),
-		Position = UDim2.new(0.5, 0, 0.5, 0),
-		Size = UDim2.new(1, 0, 1, 0),
-		BackgroundColor3 = Color3.fromRGB(255,255,255),
-		BackgroundTransparency = 1,
-		Misc = {
-			gradientType = 0,
-			cornerType = 0,
-			func = nil,
-		}
-	},
-	topBar = {
-		Self = nil,
-		Type = "TextButton",
-		Parent = "frame",
-		Name = "TopBar",
-		Text = "",
-		Position = UDim2.new(0.385, 0, 0.272, 0), 
-		Size = UDim2.new(0.24, 0, 0.026, 0),
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.3,
-		BorderSizePixel = 0,
-		ZIndex =  2,
-		Misc = {
-			gradientType = 1,
-			cornerType = 0,
-			grabbable = true,
-			held = false,
-		}
-	},
-	topBarButton = {
-		Self = nil,
-		Type = "TextButton",
-		Parent = "topBar",
-		BackgroundColor3 = Color3.fromRGB(30, 30, 35),
-		BackgroundTransparency = 0.3,
-		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -0, 0.5, 0),
-		Size = UDim2.new(0, 20, 0, 20),
-		FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json"),
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		TextSize = 16,
-		TextScaled = false,
-		BorderSizePixel = 0,
-		Text = ">",
-		ZIndex =  2,	
-		Misc = {
-			gradientType = 1,
-			cornerType = 1,
-			func = UiCloseOpen,
-		}
-	},
-	topBarText = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "topBar",
-		AnchorPoint = Vector2.new(0,0.5),
-		Position = UDim2.new(0,1, 0.6, 0),
-		Size = UDim2.new(1,0,1,0),
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		Text = "Dr. Rosploitnik",
-		TextXAlignment = Enum.TextXAlignment.Left,
-		TextYAlignment = Enum.TextYAlignment.Center,
-		TextSize =16,
-		ZIndex =  2,
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		BackgroundTransparency = 1,
-		Misc = nil
-	},
-	holder = {
-		Self = nil,
-		Name = "Holder",
-		Type = "Frame",
-		Parent = "frame",
-		BackgroundColor3 = Color3.fromRGB(44, 47, 50),
-		BackgroundTransparency = .5,
-		BorderMode = Enum.BorderMode.Outline,
-		BorderColor3 = Color3.fromRGB(255, 255, 255),
-		BorderSizePixel = 2,
-		Position = UDim2.new(0.385, 0, 0.269, 0),
-		Size = UDim2.new(0.24, 0, 0.461, 0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-
-	contents = {
-		Self = nil,
-		Name = "Contents",
-		Type = "ScrollingFrame",
-		BackgroundTransparency = 1,
-		Parent = "holder",
-		Position = UDim2.new(0, 0, 0.059, 0),
-		Size = UDim2.new(1, 0, 0.941, 0),
-		ClipsDescendants = true,
-		Misc = {
-			uiListLayout = 1,
-		}
-	},
-	-- ESP FRAME --
-	espFrame = {
-		Self = nil,
-		Name = "ESP",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 8,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	espButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "espFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255), 
-		TextSize = 14,
-		Misc = {
-			isPill = true,
-			gradientType = 1,
-			cornerType = 2,
-			func = OnEsp,
-		}
-	},
-	espTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "espFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "ESP",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	espTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "espFrame",
-		Position = UDim2.new(0.195,0,0.578,0),
-		Size = UDim2.new(0,94,0,34),
-		Text = "See people through walls.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = false,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
-	-- ANTI GRAVITY FRAME --
-	antiGravityFrame = {
-		Self = nil,
-		Name = "antiGravity",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 7,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	antiGravityButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "antiGravityFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnFloat,
-		}
-	},
-	antiGravityTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "antiGravityFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Anti Gravity",
-		TextColor3 = Color3.fromRGB(112, 213, 2505),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	antiGravityTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "antiGravityFrame",
-		Position = UDim2.new(0.189,0,0.761,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Float.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 16,
-		TextScaled = false,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
-
-	speedFrame = {
-		Self = nil,
-		Name = "Speed",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 1,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	speedButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "speedFrame",
-		Size = UDim2.new(0, 0.156, 0,0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnSpeed,
-		}
-	},
-	speedTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "speedFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Super Speed",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	speedTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "speedFrame",
-		Position = UDim2.new(0.205,0,0.66,0),
-		Size = UDim2.new(0,104,0,37),
-		Text = "Re-enable to set Accel & Speed.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 14,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	speedInputVolume = {
-		Self = nil,
-		Type = "TextBox",
-		BackgroundColor3 = Color3.fromRGB(16,16,20),
-		BackgroundTransparency = 0,
-		ClearTextOnFocus = false,
-		Text = "",
-		PlaceholderText = "Acceleration",
-		Name = "SpeedInputAcceleration",
-		Parent = "speedFrame",
-		Size = UDim2.new(0, 46, 0, 27),     
-		AnchorPoint = Vector2.new(0.5, 0.5),-- Perfect slim textbox size
-		Position = UDim2.new(0.425, 0,0.421, 0),   -- Vertically centered,
-		TextColor3 = Color3.fromRGB(255,255,255)
-	},
-	speedInputId = {
-		Self = nil,
-		Type = "TextBox",
-		BackgroundColor3 = Color3.fromRGB(16,16,20),
-		BackgroundTransparency = 0,
-		ClearTextOnFocus = false,
-		Text = "",
-		PlaceholderText = "Top Speed",
-		Name = "SpeedInputTopSpeed",
-		Parent = "speedFrame",
-		Size = UDim2.new(0, 46, 0, 27),          -- Matches Acceleration perfectly
-		Position = UDim2.new(0.603, 0,0.421	, 0),
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		TextColor3 = Color3.fromRGB(255,255,255)
-	},
-	--
-	flyFrame = {
-		Self = nil,
-		Name = "Fly",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 6,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	flyButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "flyFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnFlight,
-		}
-	},
-	flyTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "flyFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Flight",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	flyTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "flyFrame",
-		Position = UDim2.new(0.177,0,0.614,0),
-		Size = UDim2.new(0,93,0,41),
-		Text = "(REQUIRES FLOAT ENABLED!!) Fly around.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
-
-	--
-	explodeFrame = {
-		Self = nil,
-		Name = "Explode",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 5,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	explodeButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "explodeFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnExplode,
-		}
-	},
-	explodeTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "explodeFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Explode",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	explodeTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "explodeFrame",
-		Position = UDim2.new(0.194,0,0.673,0),
-		Size = UDim2.new(0,94,0,34),
-		Text = "Click to explode things.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = false,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
-	--
-	teleportFrame = {
-		Self = nil,
-		Name = "Teleport",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 3,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	teleportButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "teleportFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.188, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnTeleport,
-		}
-	},
-	teleportTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "teleportFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Teleport",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 16,
-		TextScaled = false,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	teleportTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "teleportFrame",
-		Position = UDim2.new(0.23,0,0.682,0),
-		Size = UDim2.new(0,119,0,35),
-		Text = "Middle click teleport to cursor.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
-	musicFrame = {
-		Self = nil,
-		Name = "Music",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 4,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	musicButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "musicFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnMusic,
-		}
-	},
-	musicTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "musicFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),	
-		Text = "Music",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	musicInputVolume = {
-		Self = nil,
-		Type = "TextBox",
-		BackgroundColor3 = Color3.fromRGB(16,16,20),
-		BackgroundTransparency = 0,
-		ClearTextOnFocus = false,
-		Text = "",
-		PlaceholderText = "0.5",
-		Name = "MusicInputVolume",
-		Parent = "musicFrame",
-		Size = UDim2.new(0, 46, 0, 27),     
-		AnchorPoint = Vector2.new(0.5, 0.5),-- Perfect slim textbox size
-		Position = UDim2.new(0.376, 0,0.421, 0),   -- Vertically centered,
-		TextColor3 = Color3.fromRGB(255,255,255)
-	},
-	musicInputId = {
-		Self = nil,
-		Type = "TextBox",
-		BackgroundColor3 = Color3.fromRGB(16,16,20),
-		BackgroundTransparency = 0,
-		ClearTextOnFocus = false,
-		Text = "",
-		PlaceholderText = "Asset Id",
-		Name = "MusicInputId",
-		Parent = "musicFrame",
-		Position = UDim2.new(0.612, 0,0.418, 0),
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Size = UDim2.new(0, 46, 0, 27),
-		TextColor3 = Color3.fromRGB(255,255,255)
-	},
-	musicTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "musicFrame",
-		Position = UDim2.new(0.217,0,0.66,0),
-		Size = UDim2.new(0,112,0,37),
-		Text = "Add in music id (only number).",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
-	spamFrame = {
-		Self = nil,
-		Name = "Auto Chat",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 2,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	spamButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "spamFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175	, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			gradientType = 1,
-			cornerType = 2,
-			func = OnSpam,
-		}
-	},
-	spamTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "spamFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Auto Chat",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	spamInputCooldown = {
-		Self = nil,
-		Type = "TextBox",
-		BackgroundColor3 = Color3.fromRGB(16,16,20),
-		BackgroundTransparency = 0,
-		ClearTextOnFocus = false,
-		Text = "",
-		PlaceholderText = "Chat Cooldown",
-		Name = "SpamInputCooldown",
-		Parent = "spamFrame",
-		Size = UDim2.new(0, 46, 0, 27),     
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.new(0.376, 0, 0.421, 0),
-		TextColor3 = Color3.fromRGB(255,255,255)
-	},
-	spamInputMessage = {
-		Self = nil,
-		Type = "TextBox",
-		BackgroundColor3 = Color3.fromRGB(16,16,20),
-		BackgroundTransparency = 0,
-		ClearTextOnFocus = false,
-		Text = "",
-		PlaceholderText = "Chat Message",
-		Name = "SpamInputMessage",
-		Parent = "spamFrame",
-		Position = UDim2.new(0.612, 0, 0.418, 0),
-		Size = UDim2.new(0, 46, 0, 27),
-		TextColor3 = Color3.fromRGB(255,255,255)
-	},
-	spamTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "spamFrame",
-		Position = UDim2.new(0.152,0,0.606,0),
-		Size = UDim2.new(0,78,0,45),
-		Text = "Spam in chat",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal),
-		TextSize = 16,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--	-- NoClip FRAME --
-	NoClipFrame = {
-		Self = nil,
-		Name = "NoClip",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 9,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	noclipButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "NoClipFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextSize = 14,
-		Misc = {
-			isPill = true,
-			gradientType = 1,
-			cornerType = 2,
-			func = OnEsp,
-		}
-	},
-	noclipTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "NoClipFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "NoClip",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	noclipTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "NoClipFrame",
-		Position = UDim2.new(0.189,0,0.678,0),
-		Size = UDim2.new(0,88,0,34),
-		Text = "walk through walls, and solid objects.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = false,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--	-- Spinbot FRAME --
-	SpinbotFrame = {
-		Self = nil,
-		Name = "Spinbot",
-		Type = "Frame",
-		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
-		BackgroundTransparency = 0.2,
-		BorderColor3 = Color3.fromRGB(73, 163, 181),
-		BorderMode = Enum.BorderMode.Outline,
-		BorderSizePixel = 1,
-		LayoutOrder = 9,
-		Size = UDim2.new(1,0,0.1,0),
-		Misc = {
-			gradientType = 1,
-		}
-	},
-	spinbotButton = {
-		Self = nil,
-		Type = "TextButton",
-		BackgroundTransparency = 0.1,
-		BackgroundColor3 = Color3.fromRGB(145, 39, 80),
-		Parent = "SpinbotFrame",
-		Size = UDim2.new(0, 0.156, 0, 0.61,0),
-		Position = UDim2.new(0.806, 0, 0.175, 0),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-		Text = "OFF",
-		TextColor3 = Color3.fromRGB(255, 255, 255), -- Clean muted gray text
-		TextSize = 14,
-		Misc = {
-			isPill = true,
-			gradientType = 1,
-			cornerType = 2,
-			func = OnSpin,
-		}
-	},
-	spinbotTextName = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "SpinbotFrame",
-		Position = UDim2.new(0.189,0,0.203,0),
-		Size = UDim2.new(0,94,0,20),
-		Text = "Spinbot",
-		TextColor3 = Color3.fromRGB(112, 213, 250),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 22,
-		TextScaled = true,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	spinbotTextDesc = {
-		Self = nil,
-		Type = "TextLabel",
-		Parent = "SpinbotFrame",
-		Position = UDim2.new(0.194,0,0.673,0),
-		Size = UDim2.new(0,94,0,34),
-		Text = "spin around lol.",
-		TextColor3 = Color3.fromRGB(255,255,255),
-		FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
-		TextSize = 12,
-		TextScaled = false,
-		BackgroundTransparency = 1,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		AnchorPoint = Vector2.new(0.5 ,0.5),
-	},
-	--
 }
 
 function AnimationConstructor()
@@ -2093,7 +1224,7 @@ function ParticleConstructor()
 				particle[key] = value
 			else
 				for key2, value2 in pairs(value) do
-					particle:SetAttribute(key2, value2) -- Assign any misc values as attributes so we can read them later
+					particle:SetAttribute(key2, value2)
 				end
 			end
 			particle.Parent = folder
@@ -2142,20 +1273,12 @@ function UiConstructor()
 		v["Self"] = obj
 		for key, value in pairs(v) do
 			if key ~= "Type" and key ~= "Misc" and key ~= "Parent" and key ~= "Self" then
-				obj[key] = value -- Set property of the instanced object
+				obj[key] = value 
 			elseif key == "Misc" then
 				if value["Func"] then
 					obj.MouseButton1Click:Connect(function()
 						value["Func"](obj)
 					end)
-				end
-				if value.Misc then
-					if value.Misc.isPill then
-						local uiCorner = Instance.new("UICorner")
-						-- 14 pixels is the magic number to perfectly round a 27px tall button into a pill
-						uiCorner.CornerRadius = UDim.new(0, 14) 
-						uiCorner.Parent = obj
-					end
 				end
 				if value["UiListLayout"] then
 					local uiList = Instance.new("UIListLayout")
@@ -2195,7 +1318,6 @@ function UiParent()
 	end
 end
 
--- Script ui setup --
 function ScriptSetup()
 	game.StarterGui:SetCore("SendNotification", {
 		Title = "Dr Rosploitnic",
@@ -2209,4 +1331,3 @@ function ScriptSetup()
 end
 
 ScriptSetup()
---
