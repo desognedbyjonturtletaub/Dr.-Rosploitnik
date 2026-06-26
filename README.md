@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images//DrRosploitnik.png" alt="Dr Rosploitnik Banner" width="100%">
+  <img src="Images//DrRosploitnikSmall.png" alt="Dr Rosploitnik Banner" width="100%">
 </p>
 <h2 align="centre">
    Dr. Rosploitnik </h2>
@@ -29,12 +29,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 <h2>Previews:</h2>
 
 <table border="0">
-  <!-- TOP ROW -->
   <tr>
     <td><img src="Previews/Screen2.png" width="100%"></td>
   </tr>
-  <!-- BOTTOM ROW -->
   <tr>
+    <td><img src="Previews/Screen4.png" width="100%"></td>
+  </tr>
+    <tr>
     <td><img src="Previews/Screen5.png" width="100%"></td>
   </tr>
 </table>
