@@ -65,12 +65,12 @@ humanoid.StateChanged:Connect(function(oldState, newState)
 	end
 end)
 
-function StopAnim(string) -- Stop anim within dictionary 
+function StopAnim(string) 
 	anims[string].Self:Stop()
 end
 
 
-function PlayAnim(string, speed) -- Play anim within dictionary
+function PlayAnim(string, speed) 
 	if anims[string].Self.IsPlaying == false then
 		anims[string].Self:Play()
 	elseif speed then
@@ -80,7 +80,6 @@ function PlayAnim(string, speed) -- Play anim within dictionary
 	end
 end
 
--- Ui close and open, via minimise button --
 function ButtonCosmetic(button, bool)
 	soundsFolder:FindFirstChild("Press"):Play()
 	if bool == true then
