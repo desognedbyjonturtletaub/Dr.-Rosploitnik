@@ -17,7 +17,7 @@
 1. Download the "specific scripting application" of your choice.
 2. Execute the loadstring that is provided down below.
 ```luau
-loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/main/Main.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/v0.0.7/Main.lua", true))()
 ````
 ## Developers & Credits
 [``Desognedby``](https://github.com/desognedbyjonturtletaub)   - Joint Account

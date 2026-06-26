@@ -13,6 +13,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local hrp = character:WaitForChild("HumanoidRootPart")
 
+local gitMain = "v0.0.7"
 local generalChannel = textChatService.TextChannels:WaitForChild("RBXGeneral")
 
 local holderDefaultSize = UDim2.new(0.194, 0, 0.461, 0)
@@ -514,15 +515,15 @@ function OnEsp(button)
 end
 
 -- Anim table, .Self = the :LoadAnimation()
-anims = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Anims.lua"))()
+anims = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/".. gitMain.. "/Modules/Anims.lua"))()
 -- Sounds table
-sounds = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Sounds.lua"))()
+sounds = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/".. gitMain.. "/Modules/Sounds.lua"))()
 -- Trails table to be instantiated later --
-trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Trails.lua"))()
+trails = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/".. gitMain.. "/Modules/Trails.lua"))()
 -- Particles table to be instantiated later --
-particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/Particles.lua"))()
+particles = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/".. gitMain.. "/Modules/Particles.lua"))()
 -- Ui config table, edit properties in here and assign func to button functions --
-config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/main/Modules/UiConfig.lua"))()
+config = loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/refs/heads/".. gitMain.. "/Modules/UiConfig.lua"))()
 
 function ParticleConstructor()
 	local folder = Instance.new("Folder")
