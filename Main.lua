@@ -489,8 +489,8 @@ function OnEsp(button)
 							highlight.Name = "ESPHighlight"
 							highlight.FillTransparency = 0.5
 							highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-							highlight.OutlineColor = Color3.fromRGB(200, 255, 200)
-							highlight.FillColor = Color3.fromRGB(50,255,100)
+							highlight.OutlineColor = Color3.fromRGB(222, 170, 255)
+							highlight.FillColor = Color3.fromRGB(131, 55, 138)
 						end
 					end
 				end
