@@ -113,7 +113,7 @@ return {
 		Name = "ESP",
 		Type = "Frame",
 		Parent = "contents",
-		BackgroundColor3 = Color3.fromRGB(20,20,38),
+		BackgroundColor3 = Color3.fromRGB(123, 213, 255),
 		BackgroundTransparency = 0.5,
 		BorderColor3 = Color3.fromRGB(255,255,255),
 		BorderMode = Enum.BorderMode.Outline,
