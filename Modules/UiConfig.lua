@@ -93,23 +93,7 @@ return {
 			gradientType = 1,
 		}
 	},
-	rosploitnikImage = {
-		Self = nil,
-		Image = "rbxassetid://105076512076789",
-		Name = "RosploitnikImage",
-		Type = "ImageLabel",
-		BackgroundTransparency = 1,
-		BackgroundColor3 = Color3.fromRGB(255,255,255),
-		ImageTransparency = 0.1,
-		ImageColor3 = Color3.fromRGB(80, 80, 80),
-		Parent = "holder",
-		Position = UDim2.new(0,0,0,0),
-		Size = UDim2.new(1,0,1,0),
-		ZIndex = -1,
-		Misc = {
-			gradientType = 1,
-		}
-	},
+
 	contents = {
 		Self = nil,
 		Name = "Contents",
