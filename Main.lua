@@ -13,6 +13,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local hrp = character:WaitForChild("HumanoidRootPart")
 
+local gitMain = "v0.0.9"
 local generalChannel = textChatService.TextChannels:WaitForChild("RBXGeneral")
 
 local holderDefaultSize = UDim2.new(0.194, 0, 0.461, 0)
