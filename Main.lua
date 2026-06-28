@@ -13,7 +13,6 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local hrp = character:WaitForChild("HumanoidRootPart")
 
-local gitMain = "v0.0.8"
 local generalChannel = textChatService.TextChannels:WaitForChild("RBXGeneral")
 
 local holderDefaultSize = UDim2.new(0.194, 0, 0.461, 0)
@@ -31,7 +30,7 @@ local trails = {}
 local sounds = {}
 
 print("I AM LOADING ROSPLOITNIK")
-
+-- This is for gathering player list for ESP highlights --
 for i = 1, #allInitialPlayers do
 	currentPlayerList[allInitialPlayers[i]] = true;
 end
@@ -66,12 +65,12 @@ humanoid.StateChanged:Connect(function(oldState, newState)
 	end
 end)
 
-function StopAnim(string) 
+function StopAnim(string) -- Stop anim within dictionary 
 	anims[string].Self:Stop()
 end
 
 
-function PlayAnim(string, speed) 
+function PlayAnim(string, speed) -- Play anim within dictionary
 	if anims[string].Self.IsPlaying == false then
 		anims[string].Self:Play()
 	elseif speed then
@@ -81,6 +80,7 @@ function PlayAnim(string, speed)
 	end
 end
 
+-- Ui close and open, via minimise button --
 function ButtonCosmetic(button, bool)
 	soundsFolder:FindFirstChild("Press"):Play()
 	if bool == true then
@@ -489,8 +489,8 @@ function OnEsp(button)
 							highlight.Name = "ESPHighlight"
 							highlight.FillTransparency = 0.5
 							highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-							highlight.OutlineColor = Color3.fromRGB(222, 170, 255)
-							highlight.FillColor = Color3.fromRGB(131, 55, 138)
+							highlight.OutlineColor = Color3.fromRGB(200, 255, 200)
+							highlight.FillColor = Color3.fromRGB(50,255,100)
 						end
 					end
 				end
@@ -603,7 +603,7 @@ function UiConstructor()
 					local gradient = Instance.new("UIGradient")
 					gradient.Color = ColorSequence.new{
 						ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
-						ColorSequenceKeypoint.new(1, Color3.fromRGB(124, 198, 211))
+						ColorSequenceKeypoint.new(1, Color3.fromRGB(97,101,135))
 					}
 					gradient.Rotation = 90
 					gradient.Parent = obj
