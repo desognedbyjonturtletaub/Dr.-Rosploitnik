@@ -29,7 +29,7 @@ function ButtonCosmetic(button, bool)
 	end
 end
 
-mainFunctions.onSideBarButton = function OnSidebarButton(button)
+mainFunctions.onSideBarButton = function(button)
 	if button == nil then
 		return
 	end
@@ -41,7 +41,7 @@ mainFunctions.onSideBarButton = function OnSidebarButton(button)
 end
 
 local open = true
-mainFunctions.uiCloseOpen = function UiCloseOpen(button)
+mainFunctions.uiCloseOpen = function(button)
 	if button == nil or not config["holder"].Self then
 		return
 	end
@@ -70,7 +70,7 @@ function OnSpamHearbeat()
 	end
 end
 
-mainFunctions.onSpam = function OnSpam(button, heartbeatFunctions)
+mainFunctions.onSpam = function(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -96,7 +96,7 @@ mainFunctions.onSpam = function OnSpam(button, heartbeatFunctions)
 end
 
 local playerTPEnabled = false
-mainFunctions.onPlayerTeleport = function OnPlayerTeleport(button)
+mainFunctions.onPlayerTeleport = function(button)
 	local text = ""
 	if button == nil then
 		return
@@ -114,7 +114,7 @@ mainFunctions.onPlayerTeleport = function OnPlayerTeleport(button)
 end
 
 local musicEnabled = false
-mainFunctions.onMusic = function OnMusic(button)
+mainFunctions.onMusic = function(button)
 	if button == nil then
 		return
 	end
@@ -141,7 +141,7 @@ function OnSpinHearbeat()
 	end
 end
 
-mainFunctions.onSpin = function OnSpin(button, heartbeatFunctions)
+mainFunctions.onSpin = function(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -162,7 +162,7 @@ end
 
 local teleportEnabled = false
 local teleportClickFunc = nil
-mainFunctions.onTeleport = function OnTeleport(button)
+mainFunctions.onTeleport = function(button)
 	if button == nil then
 		return
 	end
@@ -213,7 +213,7 @@ end
 
 local explodeEnabled = false
 local explodeClickFunc = nil
-mainFunctions.onExplode = function OnExplode(button)
+mainFunctions.onExplode = function(button)
 	if button == nil then
 		return
 	end
@@ -288,7 +288,7 @@ function OnFlightHeartbeat(deltaTime)
 	hrp.AssemblyAngularVelocity = Vector3.zero
 end
 
-mainFunctions.onFlight = function OnFlight(button, heartbeatFunctions)
+mainFunctions.onFlight = function(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -422,7 +422,7 @@ function OnSpeedHeartbeat(deltaTime)
 	end
 end
 
-mainFunctions.onSpeed = function OnSpeed(button, heartbeatFunctions)
+mainFunctions.onSpeed = function(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -472,7 +472,7 @@ function OnEspHeartbeat()
 	end
 end
 
-mainFunctions.onEsp = function OnEsp(button, heartbeatFunctions)
+mainFunctions.onEsp = function(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
