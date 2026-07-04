@@ -1,12 +1,17 @@
 
-function OnSidebarButton(button)
-	if button == nil then
-		return
-	end
-	if config["selected"].Self then
-		local selectBox = config["selected"].Self
-		tweenService:Create(selectBox, TweenInfo.new(0.2, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = button.Position}):Play()
-		soundsFolder:FindFirstChild("Page"):Play()
+local mainFunctions = {}
+
+function StopAnim(string)
+	anims[string].Self:Stop()
+end
+
+function PlayAnim(string, speed)
+	if anims[string].Self.IsPlaying == false then
+		anims[string].Self:Play()
+	elseif speed then
+		if anims[string].Self.Speed ~= speed then
+			anims[string].Self:AdjustSpeed(speed)
+		end
 	end
 end
 
@@ -24,8 +29,19 @@ function ButtonCosmetic(button, bool)
 	end
 end
 
+mainFunctions.onSideBarButton = function OnSidebarButton(button)
+	if button == nil then
+		return
+	end
+	if config["selected"].Self then
+		local selectBox = config["selected"].Self
+		tweenService:Create(selectBox, TweenInfo.new(0.2, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = button.Position}):Play()
+		soundsFolder:FindFirstChild("Page"):Play()
+	end
+end
+
 local open = true
-function UiCloseOpen(button)
+mainFunctions.uiCloseOpen = function UiCloseOpen(button)
 	if button == nil or not config["holder"].Self then
 		return
 	end
@@ -54,7 +70,7 @@ function OnSpamHearbeat()
 	end
 end
 
-function OnSpam(button)
+mainFunctions.onSpam = function OnSpam(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -80,7 +96,7 @@ function OnSpam(button)
 end
 
 local playerTPEnabled = false
-function OnPlayerTeleport(button)
+mainFunctions.onPlayerTeleport = function OnPlayerTeleport(button)
 	local text = ""
 	if button == nil then
 		return
@@ -98,7 +114,7 @@ function OnPlayerTeleport(button)
 end
 
 local musicEnabled = false
-function OnMusic(button)
+mainFunctions.onMusic = function OnMusic(button)
 	if button == nil then
 		return
 	end
@@ -125,7 +141,7 @@ function OnSpinHearbeat()
 	end
 end
 
-function OnSpin(button)
+mainFunctions.onSpin = function OnSpin(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -146,7 +162,7 @@ end
 
 local teleportEnabled = false
 local teleportClickFunc = nil
-function OnTeleport(button)
+mainFunctions.onTeleport = function OnTeleport(button)
 	if button == nil then
 		return
 	end
@@ -197,7 +213,7 @@ end
 
 local explodeEnabled = false
 local explodeClickFunc = nil
-function OnExplode(button)
+mainFunctions.onExplode = function OnExplode(button)
 	if button == nil then
 		return
 	end
@@ -272,7 +288,7 @@ function OnFlightHeartbeat(deltaTime)
 	hrp.AssemblyAngularVelocity = Vector3.zero
 end
 
-function OnFlight(button)
+mainFunctions.onFlight = function OnFlight(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -406,7 +422,7 @@ function OnSpeedHeartbeat(deltaTime)
 	end
 end
 
-function OnSpeed(button)
+mainFunctions.onSpeed = function OnSpeed(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -456,7 +472,7 @@ function OnEspHeartbeat()
 	end
 end
 
-function OnEsp(button)
+mainFunctions.onEsp = function OnEsp(button, heartbeatFunctions)
 	if button == nil then
 		return
 	end
@@ -481,3 +497,5 @@ function OnEsp(button)
 	end
 	ButtonCosmetic(button, espEnabled)
 end
+
+return mainFunctions
