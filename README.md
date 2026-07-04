@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images//DrRosploitnikSmall.png" alt="Dr Rosploitnik Banner" width="100%">
+  <img src="Images//DrRosploitnikAnimated.gif" alt="Dr Rosploitnik Banner" width="100%">
 </p>
 <h2 align="centre">
    Dr. Rosploitnik </h2>
