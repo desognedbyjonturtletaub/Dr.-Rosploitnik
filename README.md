@@ -6,6 +6,8 @@
   An all purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
   <br>
   Made for educational purposes
+  <br>
+  Not liable for any repercussions!
 </h2>
 
 ## Contacts
