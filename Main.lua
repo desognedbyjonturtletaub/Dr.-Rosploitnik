@@ -67,7 +67,7 @@ local uiGradientTypes = {
 
 local env = getfenv()
 local isFileFunc, writeFileFunc, getCustomAssetFunc = env.isfile, env.writefile, env.getcustomasset
-local gitMain = "https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/0.1.0"
+local gitMain = "https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/v0.1.0"
 local isStudio = game:GetService("RunService"):IsStudio()
 
 local images = {}
