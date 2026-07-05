@@ -4,9 +4,8 @@
 <h2 align="centre">
    Dr. Rosploitnik </h2>
   An all purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
-</h2>
-<h2>
-    Made for educational reasons
+  <br>
+  made for education purposes
 </h2>
 
 ## Contacts
