@@ -303,6 +303,7 @@ return function(core)
 				Size = UDim2.new(0.987, 0, 0.94, 0),
 				Misc = {
 					CornerRadius = UDim.new(0, 4),
+					GradientType = 1,
 				}
 			},
 				deactivateGlowButton = {
@@ -353,69 +354,5 @@ return function(core)
 				TextScaled = true,
 				TextXAlignment = Enum.TextXAlignment.Left,
 			},
-		antiGravity = {
-			Self = nil,
-			Type = "Frame",
-			Parent = "scroll",
-			Name = "antiGravity",
-			BackgroundTransparency = 1,
-			BorderColor3 = Color3.fromRGB(255, 255, 255),
-			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0.06, 0),
-			ZIndex = 1,
-			LayoutOrder = 0,
-			ClipsDescendants = false,
-		},
-		antiGravityBorder = {
-			Self = nil,
-			Type = "Frame",
-			Parent = "antiGravity",
-			Name = "antiGravityBorder",
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			BackgroundColor3 = core.globalConfigs.uiPrimaryCol,
-			BackgroundTransparency = 0,
-			Position = UDim2.new(0.5, 0, 0.5, 0),
-			ZIndex = 2,
-			Size = UDim2.new(1, 0, 1, 0),
-			Misc = {
-				CornerRadius = UDim.new(0, 4),
-			}
-		},
-		antiGravityInner = {
-			Self = nil,
-			Type = "Frame",
-			Parent = "antiGravity",
-			Name = "antiGravityInner",
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			BackgroundColor3 = core.globalConfigs.uiBackgroundCol,
-			BackgroundTransparency = 0,
-			Position = UDim2.new(0.5, 0, 0.5, 0),
-			ZIndex = 3,
-			Size = UDim2.new(0.987, 0, 0.94, 0),
-			Misc = {
-				CornerRadius = UDim.new(0, 4),
-			}
-		},
-		antiGravityTextButton = {
-			Self = nil,
-			Type = "TextButton",
-			Name = "antiGravityTextButton",
-			Parent = "antiGravity",
-			BackgroundColor3 = core.globalConfigs.uiPrimaryCol,
-			BackgroundTransparency = 0,
-			Position = UDim2.new(0.784, 0, 0.314, 0),
-			Size = UDim2.new(0.187, 0, 0.342, 0),
-			Text = "OFF",
-			FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
-			TextColor3 = core.globalConfigs.uiBackgroundCol,
-			TextScaled = false,
-			TextSize = 14,
-			ZIndex = 4,
-			TextWrapped = false,
-			Misc = {
-				CornerRadius = UDim.new(0, 20),
-				Func = core.mainFunctions.OnFloat,
-			}
-		},
 	}
 end

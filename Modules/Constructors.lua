@@ -95,9 +95,11 @@ return function(core)
 						uiList.VerticalAlignment = Enum.VerticalAlignment.Top
 						uiList.HorizontalAlignment = Enum.HorizontalAlignment.Left
 					end
-					if value["GradientType"] == 1 then
+					if value["GradientType"] then
 						local gradient = Instance.new("UIGradient")
-						gradient.Color = core.globalConfigs.uiGradientTypes[value["GradientType"] - 1]
+						gradient.Rotation = 90
+						gradient.Color = core.globalConfigs.uiGradientTypes[value["GradientType"]]
+						gradient.Parent = obj
 					end
 					if value["CornerRadius"] then
 						local corner = Instance.new("UICorner")

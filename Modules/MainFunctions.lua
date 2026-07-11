@@ -29,10 +29,12 @@ return function(core)
 			button.Text = "ON"
 			button.BackgroundColor3 = core.globalConfigs.uiSecondaryCol
 			button.TextColor3 = core.globalConfigs.uiBackgroundCol
+			button.Parent.ImageColor3 = core.globalConfigs.uiSecondaryCol
 		else
 			button.Text = "OFF"
 			button.BackgroundColor3 = core.globalConfigs.uiPrimaryCol
 			button.TextColor3 = core.globalConfigs.uiBackgroundCol
+			button.Parent.ImageColor3 = core.globalConfigs.uiPrimaryCol
 		end
 	end
 	
@@ -66,6 +68,10 @@ return function(core)
 			v(false, true)
 		end
 	end
+	
+	function core.InternalFrames()
+		core.BuildFunctionFrames(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.")
+	end
 
 	local floatEnabled = false
 	function mainFunctions.OnFloat(button, forceDeactivate)
@@ -76,7 +82,7 @@ return function(core)
 			floatEnabled = true	
 			workspace.Gravity = .1
 		end
-		core.ButtonCosmetic(core.ui.antiGravityTextButton.Self, floatEnabled)
+		core.ButtonCosmetic(core.ui.floatToggle.Self, floatEnabled)
 	end
 
 	local spamEnabled = false
@@ -112,6 +118,128 @@ return function(core)
 			end
 		end
 		core.ButtonCosmetic(button, spamEnabled)
+	end
+	
+	function core.BuildFunctionFrames(func, boxTitles, boxPlaceholders, title, desc)
+		core.ui[title] = {
+			Self = nil,
+			Type = "Frame",
+			Parent = "scroll",
+			Name = title,
+			BackgroundTransparency = 1,
+			BorderColor3 = Color3.fromRGB(255, 255, 255),
+			BorderSizePixel = 0,
+			Size = UDim2.new(1, 0, 0.06, 0),
+			ZIndex = 1,
+			LayoutOrder = 0,
+			ClipsDescendants = false,
+		}
+		core.ui[title.. "Border"] = {
+			Self = nil,
+			Type = "Frame",
+			Parent = title,
+			Name = title.. "Border",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundColor3 = core.globalConfigs.uiPrimaryCol,
+			BackgroundTransparency = 0,
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			Size = UDim2.new(1, 0, 1, 0),
+			Misc = {
+				CornerRadius = UDim.new(0, 4),
+			}
+		}
+		core.ui[title.. "Inner"] = {
+			Self = nil,
+			Type = "Frame",
+			Parent = title.. "Border",
+			Name = title.. "Inner",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundColor3 = core.globalConfigs.uiBackgroundCol,
+			BackgroundTransparency = 0,
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			Size = UDim2.new(0.987, 0, 0.94, 0),
+			Misc = {
+				CornerRadius = UDim.new(0, 4),
+				GradientType = 1,
+			}
+		}
+		core.ui[title.. "ToggleGlow"] = {
+			Self = nil,
+			Type = "ImageLabel",
+			Parent = title.. "Inner",
+			Name = title.. "ToggleGlow",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundTransparency = 1,
+			Position = UDim2.new(0.876, 0, 0.491, 0),
+			Size = UDim2.new(0.273, 0, 0.585, 0),
+			Image = core:CreateFile("Glow.png", core.gitBranch.. "/Images/GlowRound.png", "rbxassetid://196969716"),
+			ImageColor3 = core.globalConfigs.uiPrimaryCol,
+		}
+		core.ui[title.. "Toggle"] = {
+			Self = nil,
+			Type = "TextButton",
+			BackgroundColor3 = core.globalConfigs.uiPrimaryCol,
+			BackgroundTransparency = 0,
+			Parent = title.. "ToggleGlow",
+			Name = title.. "Toggle",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.new(0.5, 0, 0.5, 0),
+			Size = UDim2.new(0.7, 0, 0.6, 0),
+			ZIndex = 1,
+			FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
+			Text = "OFF",
+			TextColor3 = core.globalConfigs.uiBackgroundCol,
+			TextSize = 14,
+			TextScaled = false,
+			Misc = {
+				CornerRadius = UDim.new(0, 20),
+				Func = func
+			}
+		}
+		core.ui[title.. "Desc"] = {
+			Self = nil,
+			Type = "TextLabel",
+			BackgroundTransparency = 1,
+			Name = title.. "Desc",
+			Parent = title.. "Inner",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.new(0.163, 0, 0.693, 0),
+			Size = UDim2.new(0.234, 0, 0.409, 0),
+			FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic),
+			Text = desc,
+			TextColor3 = Color3.fromRGB(255, 255, 255),
+			TextScaled = true,
+			TextSize = 7,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Left,
+		}
+		core.ui[title.. "Title"] = {
+			Self = nil,
+			Type = "TextLabel",
+			BackgroundTransparency = 1,
+			Name = title.. "Title",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Parent = title.. "Inner",
+			Position = UDim2.new(0.176, 0, 0.17, 0),
+			Size = UDim2.new(0.277, 0, 0.277, 0),
+			FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
+			Text = title:gsub("^%l", string.upper),
+			TextColor3 = core.globalConfigs.uiPrimaryCol,
+			TextSize = 22,
+			TextScaled = true,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Left,
+		}
+		core.ui[title.. "Inputs"] = {
+			Self = nil,
+			Type = "Frame",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundTransparency = 1,
+			
+			Misc = {
+				UiListLayout = true,
+			}
+		}
 	end
 	return mainFunctions
 end
