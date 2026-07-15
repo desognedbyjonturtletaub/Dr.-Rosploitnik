@@ -24,11 +24,11 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/v0.1.0/Main.lua", true))()
 ````
 ## Developers & Credits
-[``Desognedby``](https://github.com/desognedbyjonturtletaub)   - Joint Account
+[``Desognedby``](https://github.com/desognedbyjonturtletaub)   - Joint Account, Repo Holder
 <br/>
-[``lelogint``](https://github.com/lelogint)   -Programmer, Ui Designer
+[``lelogint``](https://github.com/lelogint)   - Script Programmer (.lua/.luau), Ui Design, Art assets
 <br/>
-[``Eclipse<h2``](https://github.com/Eclipse-h2)   -Sound Provider Of Project, Ui Designer
+[``Eclipse<h2``](https://github.com/Eclipse-h2)   - Website Dev (.html/.css/.jss), Ui Design, Sound assets
 <br>
 <h2>Previews:</h2>
 
