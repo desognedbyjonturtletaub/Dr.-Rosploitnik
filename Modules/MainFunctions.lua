@@ -1,4 +1,7 @@
+local userInputService = game:GetService("UserInputService")
 local tweenService = game:GetService("TweenService")
+local players = game:GetService("Players")
+local debris = game:GetService("Debris")
 
 local dedicatedFunctions = {
 	[142823291] = "mm2",
@@ -69,10 +72,6 @@ return function(core)
 		end
 	end
 	
-	function core.InternalFrames()
-		core.BuildFunctionFrames(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.")
-	end
-
 	local floatEnabled = false
 	function mainFunctions.OnFloat(button, forceDeactivate)
 		if floatEnabled == true or forceDeactivate then
@@ -118,6 +117,362 @@ return function(core)
 			end
 		end
 		core.ButtonCosmetic(button, spamEnabled)
+	end
+	
+	function core.OnPlayerTeleport(button, forceDeactivate)
+		local text = ""
+		if players:FindFirstChild(text) then
+			local otherPlayer = players[text]
+			if otherPlayer.Character then
+				local otherCharacter = otherPlayer.Character
+				
+			end
+		end
+	end
+
+	local musicEnabled = false
+	function mainFunctions.OnMusic(button, forceDeactivate)
+		if musicEnabled == true or forceDeactivate then
+			musicEnabled = false
+			core.soundsFolder.Music:Stop()
+		elseif musicEnabled == false then
+			musicEnabled = true
+			core.soundsFolder.Music.SoundId = "rbxassetid://".. button.Parent.MusicInputId.Text
+			core.soundsFolder.Music.Volume = button.Parent.MusicInputVolume.Text
+			core.soundsFolder.Music:Play()
+		end
+		core.ButtonCosmetic(button, musicEnabled)
+	end
+
+	local spinEnabled = false
+	function mainFunctions.OnSpin(button, forceDeactivate)
+		if spinEnabled == true or forceDeactivate then
+			spinEnabled = false
+			core.StopAnim("spin")
+		elseif spinEnabled == false then
+			spinEnabled = true
+			core.PlayAnim("spin", 5)
+			anims["spin"].Self.Priority = Enum.AnimationPriority.Action4
+		end
+		core.ButtonCosmetic(button, spinEnabled)
+	end
+
+	local teleportEnabled = false
+	local teleportClickFunc = nil
+	function mainFunctions.OnTeleport(button, forceDeactivate)
+		if teleportEnabled == true or forceDeactivate then
+			teleportEnabled = false
+			if teleportClickFunc ~= nil then
+				teleportClickFunc:Disconnect()
+				teleportClickFunc = nil
+			end
+		elseif teleportEnabled == false then
+			teleportEnabled = true
+			if teleportClickFunc == nil then
+				teleportClickFunc = userInputService.InputBegan:Connect(function(input, gameProcessed)
+					if gameProcessed then
+						return
+					end
+					if input.UserInputType == Enum.UserInputType.MouseButton3 then
+						if core.mouse.Target then
+							local effectPart = Instance.new("Part")
+							effectPart.Position = core.hrp.Position
+							effectPart.Parent = workspace
+							effectPart.Anchored = true
+							effectPart.CanCollide = false
+							effectPart.CanTouch = false
+							effectPart.CanQuery = false
+							effectPart.Size = Vector3.new(5,5,5)
+							effectPart.Transparency = 1
+							local teleportParticle1 = core.particlesFolder:FindFirstChild("Teleport1"):Clone()
+							teleportParticle1.Parent = effectPart
+							teleportParticle1:Emit(teleportParticle1:GetAttribute("emitCount"))
+
+							local teleportSound = core.soundsFolder.Teleport:Clone()
+							teleportSound.Parent = core.soundsFolder
+							teleportSound:Play()
+							debris:AddItem(teleportSound, 1)
+							hrp.Position = core.mouse.Hit.Position
+							local camType = Enum.CameraType.Custom
+							workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
+							task.wait(.1)
+							workspace.CurrentCamera.CameraType = camType
+						end
+					end
+				end)
+			end
+		end
+		core.ButtonCosmetic(button, teleportEnabled)
+	end
+
+	local explodeEnabled = false
+	local explodeClickFunc = nil
+	function mainFunctions.OnExplode(button, forceDeactivate)
+		if explodeEnabled == true or forceDeactivate then
+			explodeEnabled = false
+			if explodeClickFunc ~= nil then
+				explodeClickFunc:Disconnect()
+				explodeClickFunc = nil
+			end
+		elseif explodeEnabled == false then
+			explodeEnabled = true
+			if explodeClickFunc == nil then
+				explodeClickFunc = userInputService.InputBegan:Connect(function(input, gameProcessed)
+					if gameProcessed then
+						return
+					end
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						if core.mouse.Target then
+							local effectPart = Instance.new("Part")
+							effectPart.Position = core.mouse.Hit.Position
+							effectPart.Parent = workspace
+							effectPart.Anchored = true
+							effectPart.CanCollide = false
+							effectPart.CanTouch = false
+							effectPart.CanQuery = false
+							effectPart.Size = Vector3.new(10,10,10)
+							effectPart.Transparency = 1
+							local explodeSound = core.soundsFolder.Explode:Clone()
+							explodeSound.Parent = core.soundsFolder
+							explodeSound:Play()
+							debris:AddItem(explodeSound, 1)
+							local explodeParticle1 = core.particlesFolder:FindFirstChild("Explosion1"):Clone()
+							explodeParticle1.Parent = effectPart
+							explodeParticle1:Emit(explodeParticle1:GetAttribute("emitCount"))
+							local explodeParticle2 = core.particlesFolder:FindFirstChild("Explosion2"):Clone()
+							explodeParticle2.Parent = effectPart
+							explodeParticle2:Emit(explodeParticle2:GetAttribute("emitCount"))
+							debris:AddItem(effectPart, 1)
+							local explosion = Instance.new("Explosion")
+							explosion.Position = core.mouse.Hit.Position
+							explosion.Parent = workspace
+							core.mouse.Target:Destroy()
+						end
+					end
+				end)
+			end
+		end
+		core.ButtonCosmetic(button, explodeEnabled)
+	end
+
+	local flightEnabled = false
+	local flightMove = Vector3.zero
+	local function OnFlightHeartbeat(deltaTime)
+		local direction = workspace.CurrentCamera.CFrame:VectorToObjectSpace(core.humanoid.MoveDirection)
+		flightMove = ((workspace.CurrentCamera.CFrame.RightVector * direction.X)  + (-workspace.CurrentCamera.CFrame.LookVector * direction.Z)).Unit
+		humanoid.WalkSpeed = 0
+		if flightMove.Magnitude > 0 then
+			core.StopAnim("flyIdle")
+			core.PlayAnim("flyMove", core.hrp.AssemblyLinearVelocity.Magnitude /100)
+			core.hrp.CFrame = core.hrp.CFrame:Lerp(CFrame.lookAt(core.hrp.Position, core.hrp.Position + flightMove, workspace.CurrentCamera.CFrame.UpVector), 0.3 * (1 - deltaTime))
+		else
+			core.StopAnim("flyMove")
+			core.PlayAnim("flyIdle", 3)
+			hrp.CFrame = core.hrp.CFrame:Lerp( CFrame.lookAt(core.hrp.Position, core.hrp.Position + workspace.CurrentCamera.CFrame.LookVector, workspace.CurrentCamera.CFrame.UpVector), 0.05 * (1 - deltaTime))
+		end
+		if direction.Magnitude > 0 and speedEnabled == false then
+			hrp.AssemblyLinearVelocity = flightMove * 25
+		else
+			hrp.AssemblyLinearVelocity /= 1 + (deltaTime * 5)
+		end
+		hrp.AssemblyAngularVelocity = Vector3.zero
+	end
+
+	function mainFunctions.OnFlight(button)
+		if button == nil then
+			return
+		end
+		if flightEnabled == false then
+			flightEnabled = true
+			if core.heartbeatFunctions["Flight"] == nil then
+				core.humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+				heartbeatFunctions["Flight"] = OnFlightHeartbeat
+			end
+		elseif flightEnabled == true then
+			flightEnabled = false
+			if core.heartbeatFunctions["Flight"] then
+				core.StopAnim("flyMove")
+				core.StopAnim("flyIdle")
+				heartbeatFunctions["Flight"] = nil
+				core.humanoid.WalkSpeed = core.defaultWalkSpeed
+				core.humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+			end
+		end
+		core.ButtonCosmetic(button, flightEnabled)
+	end
+
+	speedEnabled = false
+	local currentSpeed = nil
+	local accel = 1000
+	local maxSpeed = 250
+	local function SpeedDestroyEffects()
+		if core.hrp:FindFirstChild("RosploitnikSpeedAttachment") then
+			tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70}):Play()
+			core.soundsFolder.Wind:Pause()
+			core.hrp.RosploitnikSpeedAttachment.Speed1.Enabled = false
+			debris:AddItem(core.hrp.RosploitnikSpeedAttachment, 0.2)
+			core.hrp.RosploitnikTrailAttachment1.Trail.Enabled = false
+			core.hrp.RosploitnikTrailAttachment1.Trail2.Enabled = false
+			debris:AddItem(core.hrp.RosploitnikTrailAttachment1, 0.2)
+			debris:AddItem(core.hrp.RosploitnikTrailAttachment2, 0.2)
+		end
+	end
+
+	local function OnSpeedHeartbeat(deltaTime)
+		local moveDir = core.humanoid.MoveDirection
+		if moveDir.Magnitude > 0 then
+			tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70 + math.clamp(core.hrp.AssemblyLinearVelocity.Magnitude/5, 0, 50)}):Play()
+			if currentSpeed == nil  then
+				core.soundsFolder.Wind:Resume()
+
+				local particleAttachment = Instance.new("Attachment")
+				particleAttachment.Parent = core.hrp
+				particleAttachment.Name = "RosploitnikSpeedAttachment"
+				local speedParticle = core.particlesFolder:FindFirstChild("Speed1"):Clone()
+				speedParticle.Enabled = true
+				speedParticle.Parent = particleAttachment
+				core.soundsFolder.Boost:Play()
+
+				local trailAttachment1 = Instance.new("Attachment")
+				trailAttachment1.Parent = core.hrp
+				trailAttachment1.Name = "RosploitnikTrailAttachment1"
+				trailAttachment1.Position = Vector3.new(0,-3,0)
+				local trailAttachment2 = Instance.new("Attachment")
+				trailAttachment2.Parent = core.hrp
+				trailAttachment2.Name = "RosploitnikTrailAttachment2"
+				trailAttachment2.Position = Vector3.new(0,3,0)
+				local trail = Instance.new("Trail")
+				trail.Parent = trailAttachment1
+				trail.Attachment0 = trailAttachment1
+				trail.Attachment1 = trailAttachment2
+				local trail2 = Instance.new("Trail")
+				trail2.Parent = trailAttachment1
+				trail2.Attachment0 = trailAttachment1
+				trail2.Attachment1 = trailAttachment2
+				for i, v in pairs(core.trails["trail1"]) do
+					trail[i] = v
+				end
+				for i, v in pairs(core.trails["trail2"]) do
+					trail2[i] = v
+				end
+
+				local shockwaveParticle = core.particlesFolder:FindFirstChild("Shockwave1"):Clone()
+				shockwaveParticle:Emit(shockwaveParticle:GetAttribute("emitCount"))
+				shockwaveParticle.Parent = core.hrp.RootRigAttachment
+				debris:AddItem(shockwaveParticle, 0.3)
+				if flightEnabled == false then
+					currentSpeed = -core.hrp.CFrame:VectorToObjectSpace(core.hrp.AssemblyLinearVelocity).Z
+				else
+					local flightCFrame = core.hrp.CFrame + flightMove
+					currentSpeed = -flightCFrame:VectorToObjectSpace(core.hrp.AssemblyLinearVelocity).Z
+				end
+			end
+			if core.hrp:FindFirstChild("RosploitnikSpeedAttachment") then
+				local factor = 0
+				if flightEnabled == true then
+					factor = 50
+				else
+					factor = 60
+				end
+				local velVector = core.hrp.AssemblyLinearVelocity / factor
+				core.hrp.RosploitnikSpeedAttachment.WorldCFrame = core.hrp.RosploitnikSpeedAttachment.WorldCFrame:Lerp(CFrame.lookAt(core.hrp.Position + velVector, core.hrp.Position + core.hrp.AssemblyLinearVelocity), 0.1 * (1 - deltaTime))
+			end
+			if flightEnabled == false then
+				core.PlayAnim("boost", core.hrp.AssemblyLinearVelocity.Magnitude / 75)
+				currentSpeed = math.clamp(currentSpeed + (accel * deltaTime),  0, maxSpeed)
+				local speedLocalSpace = core.hrp.CFrame:VectorToObjectSpace(core.hrp.AssemblyLinearVelocity)
+				local speedLocalSpace = Vector3.new(speedLocalSpace.X / (1 + (1/deltaTime)), speedLocalSpace.Y, -currentSpeed)
+				hrp.AssemblyLinearVelocity = core.hrp.CFrame:VectorToWorldSpace(speedLocalSpace)
+			else
+				core.StopAnim("boost")
+				currentSpeed = math.clamp(currentSpeed + (accel * deltaTime),  0, maxSpeed)
+				core.hrp.AssemblyLinearVelocity = flightMove * currentSpeed 
+			end
+		else
+			core.StopAnim("boost")
+			currentSpeed = nil
+			SpeedDestroyEffects()
+		end
+	end
+
+	function mainFunctions.OnSpeed(button)
+		if button == nil then
+			return
+		end
+		if speedEnabled == false then
+			if type(tonumber(button.Parent.SpeedInputTopSpeed.Text)) == "number" then
+				maxSpeed = button.Parent.SpeedInputTopSpeed.Text
+			end
+			if type(tonumber(button.Parent.SpeedInputAcceleration.Text)) == "number" then
+				accel = button.Parent.SpeedInputAcceleration.Text
+			end
+			speedEnabled = true
+			if core.heartbeatFunctions["Speed"] == nil then
+				core.heartbeatFunctions["Speed"] = OnSpeedHeartbeat
+			end
+		elseif speedEnabled == true then
+			speedEnabled = false
+			if core.heartbeatFunctions["Speed"] then
+				core.StopAnim("boost")
+				SpeedDestroyEffects()
+				core.heartbeatFunctions["Speed"] = nil
+			end
+		end
+		core.ButtonCosmetic(button, speedEnabled)
+	end
+
+	local espEnabled = false
+	local espLoopStart = 0
+	local function OnEspHeartbeat()
+		local elapsed = tick() - espLoopStart
+		if elapsed > 0.5 then
+			elapsed = 0
+			espLoopStart = tick()
+			for i,v in pairs(core.currentPlayerList) do
+				if i.Character and i.Character ~= core.character and elapsed <= 0.5 then
+					if not i.Character:FindFirstChild("ESPHighlight") then
+						local highlight = Instance.new("Highlight")
+						highlight.Parent = i.Character
+						highlight.Name = "ESPHighlight"
+						highlight.FillTransparency = 0.5
+						highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+						highlight.OutlineColor = core.globalConfigs.espFillCol
+						highlight.FillColor = core.globalConfigs.espOutlineCol
+					end
+				end
+			end
+		end
+	end
+
+	function mainFunctions.OnEsp(button)
+		if button == nil then
+			return
+		end
+		if espEnabled == false then
+			espEnabled = true
+			if core.heartbeatFunctions["Esp"] == nil then
+				espLoopStart = tick()
+				core.heartbeatFunctions["Esp"] = OnEspHeartbeat
+			end
+		elseif espEnabled == true then
+			espEnabled = false
+			for i,v in pairs(core.currentPlayerList) do
+				if i.Character and i.Character ~= core.character then
+					if i.Character:FindFirstChild("ESPHighlight") then
+						i.Character.ESPHighlight:Destroy()
+					end
+				end
+			end
+			if core.heartbeatFunctions["Esp"] then
+				core.heartbeatFunctions["Esp"] = nil
+			end
+		end
+		core.ButtonCosmetic(button, espEnabled)
+	end
+	
+	function core.InternalFrames()
+		core.BuildFunctionFrames(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.")
+		core.BuildFunctionFrames(mainFunctions.OnSpeed, {"Max Speed", "Acceleration"}, {250, 1000}, "speed", "Go really fast. Speed picker in box")
 	end
 	
 	function core.BuildFunctionFrames(func, boxTitles, boxPlaceholders, title, desc)
@@ -172,7 +527,7 @@ return function(core)
 			BackgroundTransparency = 1,
 			Position = UDim2.new(0.876, 0, 0.491, 0),
 			Size = UDim2.new(0.273, 0, 0.585, 0),
-			Image = core:CreateFile("Glow.png", core.gitBranch.. "/Images/GlowRound.png", "rbxassetid://196969716"),
+			Image = core:CreateFile("GlowRound.png", core.gitBranch.. "/Images/GlowRound.png", "rbxassetid://196969716"),
 			ImageColor3 = core.globalConfigs.uiPrimaryCol,
 		}
 		core.ui[title.. "Toggle"] = {
@@ -235,11 +590,37 @@ return function(core)
 			Type = "Frame",
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			BackgroundTransparency = 1,
-			
+			Parent = title.. "Inner",
+			Name = title.. "Inputs",
+			Position = UDim2.new(0.511, 0, 0.5, 0),
+			Size = UDim2.new(0.462, 0, 1, 0),
 			Misc = {
-				UiListLayout = true,
+				UiListLayout = 2
 			}
 		}
+		
+		for i = 1, #boxTitles do
+			core.ui[title.. boxTitles[i]] = {
+				Self = nil,
+				Name = title.. boxTitles[i],
+				Parent = title.. "Inputs",
+				Type = "Frame",
+				BackgroundTransparency = 1,
+				Size = UDim2.new(0.347, 0, 1, 0),
+			}
+			core.ui[title.. "Glow".. boxTitles[i]] = {
+				Self = nil,
+				Name = title.. "Glow".. boxTitles[i],
+				Parent = title.. boxTitles[i],
+				Type = "ImageLabel",
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				BackgroundTransparency = 1,
+				Position = UDim2.new(0.497, 0, 0.67, 0),
+				Size = UDim2.new(1.476, 0, 0.683, 0),
+				Image = core:CreateFile("GlowSquare.png", core.gitBranch.. "/Images/GlowSquare.png", "rbxassetid://242292288"),
+				ImageColor3 = core.globalConfigs.uiSecondaryCol,
+			}
+		end
 	end
 	return mainFunctions
 end

@@ -39,12 +39,13 @@ return function(core)
 			Type = "ImageButton",
 			Parent = "topBar",
 			Name = "topBarButton",
-			BackgroundColor3 = core.globalConfigs.uiPrimaryCol,
-			BackgroundTransparency = 0.5,
+			BackgroundColor3 = core.globalConfigs.uiSecondaryCol,
+			BackgroundTransparency = 0,
 			AnchorPoint = Vector2.new(0.5,0.5),
 			Position = UDim2.new(0.954, 0, 0.52, 0),
 			Size = UDim2.new(0.063, 0, 0.774, 0),
 			Image = core:CreateFile("Subtract.png", core.gitBranch.. "/Images/Subtract.png", "rbxassetid://71194643269584"),
+			ImageColor3 = core.globalConfigs.uiBackgroundCol,
 			ZIndex = 3,
 			Misc = {
 				CornerRadius = UDim.new(0, 8),
@@ -62,7 +63,7 @@ return function(core)
 			SizeConstraint = Enum.SizeConstraint.RelativeYY,
 			ZIndex = 1,
 			Image = core:CreateFile("DrRosploitnikSmall.png", core.gitBranch.. "/Images/DrRosploitnikSmall.png", "rbxassetid://85950986420145"),
-			ImageColor3 = Color3.fromRGB(197, 245, 255),
+			ImageColor3 = core.globalConfigs.uiSecondaryCol,
 		},
 		textLabelName = {
 			Self = nil,
@@ -221,7 +222,7 @@ return function(core)
 			ZIndex = 1,
 			ClipsDescendants = false,
 			Misc = {
-				UiListLayout = true
+				UiListLayout = 1
 			}
 		},
 		barMain = {
@@ -277,7 +278,7 @@ return function(core)
 			VerticalScrollBarInset = Enum.ScrollBarInset.Always,
 			VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right,
 			Misc = {
-				UiListLayout = true
+				UiListLayout = 1
 			}
 		},
 		deactivate = {
@@ -314,7 +315,7 @@ return function(core)
 					BackgroundTransparency = 1,
 					Position = UDim2.new(0.892, 0, 0.491, 0),
 					Size = UDim2.new(0.257, 0, -0.946, 0),
-					Image = core:CreateFile("Glow.png", core.gitBranch.. "/Images/GlowRound.png", "rbxassetid://196969716"),
+					Image = core:CreateFile("GlowRound.png", core.gitBranch.. "/Images/GlowRound.png", "rbxassetid://196969716"),
 					ImageColor3 = core.globalConfigs.uiSecondaryCol,
 				},
 			deactivateTextButton = {
@@ -332,6 +333,7 @@ return function(core)
 				TextScaled = false,
 				TextSize = 14,
 				TextWrapped = false,
+				ZIndex = 2,
 				Misc = {
 					CornerRadius = UDim.new(0, 20),
 					Func = core.DisableAll,
@@ -356,3 +358,4 @@ return function(core)
 			},
 	}
 end
+
