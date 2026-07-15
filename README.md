@@ -24,9 +24,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 ## Developers & Credits
 [``Desognedby``](https://github.com/desognedbyjonturtletaub)   - Joint Account
 <br/>
-[``lelogint``](https://github.com/lelogint)   -Luau Dev, Ui Design, Art assets
+[``lelogint``](https://github.com/lelogint)   - Luau Dev, Ui Design, Art assets
 <br/>
-[``Eclipse<h2``](https://github.com/Eclipse-h2)   -Website Dev, Ui Design, Sound assets
+[``Eclipse<h2``](https://github.com/Eclipse-h2)   - Website Dev, Ui Design, Sound assets
 <br>
 <h2>Previews:</h2>
 
