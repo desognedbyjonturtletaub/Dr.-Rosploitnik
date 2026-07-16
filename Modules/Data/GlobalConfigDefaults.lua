@@ -1,7 +1,8 @@
 return {
-    uiPrimaryCol = Color3.fromRGB(255, 255, 255),
-	uiSecondaryCol = Color3.fromRGB(190, 90, 177),
-	uiBackgroundCol = Color3.fromRGB(12, 37, 56),
+	holderDefaultSize = UDim2.new(0.253, 0,0.501, 0),
+	uiPrimaryCol = Color3.fromRGB(190 * 1.3, 90 * 1.3, 177 * 1.3),
+	uiSecondaryCol = Color3.fromRGB(0, 150, 200),
+	uiBackgroundCol = Color3.fromRGB(0, 15, 30),
 
 	espOutlineCol = Color3.fromRGB(255, 255, 255),
 	espFillCol =  Color3.fromRGB(0,255,0),
@@ -35,5 +36,24 @@ return {
 			ColorSequenceKeypoint.new(0.95, Color3.fromRGB(117, 117, 117)),
 			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255)),
 		},
+	},
+	uiListLayoutTypes = {
+		{
+			Padding = UDim.new(0, 5),
+			HorizontalFlex = Enum.UIFlexAlignment.None,
+			FillDirection = Enum.FillDirection.Vertical,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			VerticalAlignment = Enum.VerticalAlignment.Top,
+			HorizontalAlignment = Enum.HorizontalAlignment.Left,
+		},
+		{
+			Padding = UDim.new(0, 0),
+			FillDirection = Enum.FillDirection.Horizontal,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			HorizontalAlignment = Enum.HorizontalAlignment.Left,
+			HorizontalFlex = Enum.UIFlexAlignment.SpaceEvenly,
+			VerticalAlignment = Enum.VerticalAlignment.Top,
+			VerticalFlex = Enum.UIFlexAlignment.None,
+		}
 	}
 }
