@@ -86,13 +86,13 @@ local function Startup()
 	SetGlobals()
 	
 	if not core.isStudio then -- REMOVE WHEN UPLOADING TO GITHUB!!!! REMEMBER THIS PLEEEAASSEE!!!
-		loadstring(game:HttpGet(core.gitBranch.. "/Constructors.lua"))(core)
+		loadstring(game:HttpGet(core.gitBranch.. "/Modules/Constructors.lua"))(core)
 		core.mainFunctions = loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))(core)
 		core.sounds = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Sounds.lua"))(core)
 		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))(core)
 		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))(core)
 		core.ui = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Ui.lua"))(core)
-		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/core.anims.lua"))())
+		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))())
 	else
 		require(script:WaitForChild("Constructors"))(core)
 		core.mainFunctions = require(script:WaitForChild("MainFunctions"))(core)
