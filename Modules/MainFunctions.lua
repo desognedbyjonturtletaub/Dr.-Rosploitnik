@@ -18,7 +18,8 @@ return function(core)
 	function core.PlayAnim(string, speed)
 		if core.anims[string].Self.IsPlaying == false then
 			core.anims[string].Self:Play()
-		elseif speed then
+		end
+		if speed then
 			if core.anims[string].Self.Speed ~= speed then
 				core.anims[string].Self:AdjustSpeed(speed)
 			end
@@ -50,8 +51,8 @@ return function(core)
 	end
 	
 	local open = true
-	function core.UiCloseOpen(button)
-		if button == nil or not core.ui.holder.Self then
+	function core.UiCloseOpen()
+		if not core.ui.holder.Self then
 			return
 		end
 		local uiHolder = core.ui.holder.Self
@@ -68,12 +69,12 @@ return function(core)
 	
 	function core.DisableAll()
 		for i, v in pairs(mainFunctions) do
-			v(false, true)
+			v(true)
 		end
 	end
 	
 	local floatEnabled = false
-	function mainFunctions.OnFloat(button, forceDeactivate)
+	function mainFunctions.OnFloat(forceDeactivate)
 		if floatEnabled == true or forceDeactivate then
 			floatEnabled = false
 			workspace.Gravity = core.defaultGravity
@@ -131,35 +132,54 @@ return function(core)
 	end
 
 	local musicEnabled = false
-	function mainFunctions.OnMusic(button, forceDeactivate)
+	function mainFunctions.OnMusic(forceDeactivate)
 		if musicEnabled == true or forceDeactivate then
 			musicEnabled = false
 			core.soundsFolder.Music:Stop()
 		elseif musicEnabled == false then
 			musicEnabled = true
-			core.soundsFolder.Music.SoundId = "rbxassetid://".. button.Parent.MusicInputId.Text
-			core.soundsFolder.Music.Volume = button.Parent.MusicInputVolume.Text
+			local volume = 0
+			if type(tonumber(core.ui["music".. "Input".. "Volume"].Self.Text)) == "number" then
+				volume = core.ui["music".. "Input".. "Volume"].Self.Text
+			else
+				volume = 0.5
+			end
+			core.soundsFolder.Music.SoundId = "rbxassetid://".. core.ui["music".. "Input".. "AssetId"].Self.Text
+			core.soundsFolder.Music.Volume = volume
 			core.soundsFolder.Music:Play()
 		end
-		core.ButtonCosmetic(button, musicEnabled)
+		core.ButtonCosmetic(core.ui.musicToggle.Self, musicEnabled)
 	end
 
 	local spinEnabled = false
-	function mainFunctions.OnSpin(button, forceDeactivate)
+	function mainFunctions.OnSpin(forceDeactivate)
 		if spinEnabled == true or forceDeactivate then
 			spinEnabled = false
 			core.StopAnim("spin")
 		elseif spinEnabled == false then
 			spinEnabled = true
 			core.PlayAnim("spin", 5)
-			anims["spin"].Self.Priority = Enum.AnimationPriority.Action4
+			core.anims["spin"].Self.Priority = Enum.AnimationPriority.Action4
 		end
-		core.ButtonCosmetic(button, spinEnabled)
+		core.ButtonCosmetic(core.ui.spinToggle.Self, spinEnabled)
 	end
-
+	
+	local endNormalOffset = .1
 	local teleportEnabled = false
 	local teleportClickFunc = nil
-	function mainFunctions.OnTeleport(button, forceDeactivate)
+	local function MousePointNormal()
+		local ray = workspace.CurrentCamera:ScreenPointToRay(core.mouse.X, core.mouse.Y)
+		local params = RaycastParams.new()
+		params.FilterType = Enum.RaycastFilterType.Exclude
+		params.FilterDescendantsInstances = {core.char}
+		local raycastResult = workspace:Raycast(ray.Origin, ray.Direction * 999, params)
+		if raycastResult then
+			return raycastResult.Normal
+		end
+		return nil
+	end
+	
+	function mainFunctions.OnTeleport(forceDeactivate)
 		if teleportEnabled == true or forceDeactivate then
 			teleportEnabled = false
 			if teleportClickFunc ~= nil then
@@ -168,6 +188,9 @@ return function(core)
 			end
 		elseif teleportEnabled == false then
 			teleportEnabled = true
+			if type(tonumber(core.ui["teleport".. "Input".. "NormalOffset"].Self.Text)) == "number" then
+				endNormalOffset = tonumber(core.ui["teleport".. "Input".. "NormalOffset"].Self.Text)
+			end
 			if teleportClickFunc == nil then
 				teleportClickFunc = userInputService.InputBegan:Connect(function(input, gameProcessed)
 					if gameProcessed then
@@ -192,7 +215,12 @@ return function(core)
 							teleportSound.Parent = core.soundsFolder
 							teleportSound:Play()
 							debris:AddItem(teleportSound, 1)
-							hrp.Position = core.mouse.Hit.Position
+							local rayCast = MousePointNormal()
+							if rayCast then
+								core.hrp.CFrame = CFrame.new(core.mouse.Hit.Position + (rayCast * endNormalOffset)) * core.hrp.CFrame.Rotation
+							else
+								core.hrp.CFrame = CFrame.new(core.mouse.Hit.Position) * core.hrp.CFrame.Rotation
+							end
 							local camType = Enum.CameraType.Custom
 							workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
 							task.wait(.1)
@@ -202,11 +230,23 @@ return function(core)
 				end)
 			end
 		end
-		core.ButtonCosmetic(button, teleportEnabled)
+		core.ButtonCosmetic(core.ui.teleportToggle.Self, teleportEnabled)
 	end
-
+	
+	local blastRadius = 5
+	local destroyRadius = 0
 	local explodeEnabled = false
 	local explodeClickFunc = nil
+	local function SphereCastExplosion(pos, radius)
+		local params = OverlapParams.new()
+		params.FilterType = Enum.RaycastFilterType.Exclude
+		params.FilterDescendantsInstances = {core.character}
+		local partsInRange = workspace:GetPartBoundsInRadius(pos, radius, params)
+		for _, part in pairs(partsInRange) do
+			part:Destroy()
+		end
+	end
+	
 	function mainFunctions.OnExplode(button, forceDeactivate)
 		if explodeEnabled == true or forceDeactivate then
 			explodeEnabled = false
@@ -217,6 +257,12 @@ return function(core)
 		elseif explodeEnabled == false then
 			explodeEnabled = true
 			if explodeClickFunc == nil then
+				if type(tonumber(core.ui["explode".. "Input".. "DestroyRadius"].Self.Text)) == "number" then
+					destroyRadius = tonumber(core.ui["explode".. "Input".. "DestroyRadius"].Self.Text)
+				end
+				if type(tonumber(core.ui["explode".. "Input".. "BlastRadius"].Self.Text)) == "number" then
+					blastRadius = tonumber(core.ui["explode".. "Input".. "BlastRadius"].Self.Text)
+				end
 				explodeClickFunc = userInputService.InputBegan:Connect(function(input, gameProcessed)
 					if gameProcessed then
 						return
@@ -246,13 +292,21 @@ return function(core)
 							local explosion = Instance.new("Explosion")
 							explosion.Position = core.mouse.Hit.Position
 							explosion.Parent = workspace
-							core.mouse.Target:Destroy()
+							explosion.BlastRadius = blastRadius
+							if destroyRadius == 0 then
+								local target = core.mouse.Target
+								if target:IsA("Part") then
+									target:Destroy()
+								end
+							elseif destroyRadius > 0 then
+								SphereCastExplosion(core.mouse.Hit.Position, destroyRadius)
+							end
 						end
 					end
 				end)
 			end
 		end
-		core.ButtonCosmetic(button, explodeEnabled)
+		core.ButtonCosmetic(core.ui.explodeToggle.Self, explodeEnabled)
 	end
 
 	local flightEnabled = false
@@ -260,7 +314,7 @@ return function(core)
 	local function OnFlightHeartbeat(deltaTime)
 		local direction = workspace.CurrentCamera.CFrame:VectorToObjectSpace(core.humanoid.MoveDirection)
 		flightMove = ((workspace.CurrentCamera.CFrame.RightVector * direction.X)  + (-workspace.CurrentCamera.CFrame.LookVector * direction.Z)).Unit
-		humanoid.WalkSpeed = 0
+		core.humanoid.WalkSpeed = 0
 		if flightMove.Magnitude > 0 then
 			core.StopAnim("flyIdle")
 			core.PlayAnim("flyMove", core.hrp.AssemblyLinearVelocity.Magnitude /100)
@@ -268,23 +322,23 @@ return function(core)
 		else
 			core.StopAnim("flyMove")
 			core.PlayAnim("flyIdle", 3)
-			hrp.CFrame = core.hrp.CFrame:Lerp( CFrame.lookAt(core.hrp.Position, core.hrp.Position + workspace.CurrentCamera.CFrame.LookVector, workspace.CurrentCamera.CFrame.UpVector), 0.05 * (1 - deltaTime))
+			core.hrp.CFrame = core.hrp.CFrame:Lerp( CFrame.lookAt(core.hrp.Position, core.hrp.Position + workspace.CurrentCamera.CFrame.LookVector, workspace.CurrentCamera.CFrame.UpVector), 0.05 * (1 - deltaTime))
 		end
 		if direction.Magnitude > 0 and speedEnabled == false then
-			hrp.AssemblyLinearVelocity = flightMove * 25
+			core.hrp.AssemblyLinearVelocity = flightMove * 25
 		else
-			hrp.AssemblyLinearVelocity /= 1 + (deltaTime * 5)
+			core.hrp.AssemblyLinearVelocity /= 1 + (deltaTime * 5)
 		end
-		hrp.AssemblyAngularVelocity = Vector3.zero
+		core.hrp.AssemblyAngularVelocity = Vector3.zero
 	end
 
-	function mainFunctions.OnFlight(button, forceDeactivate)
+	function mainFunctions.OnFlight(forceDeactivate)
 		if flightEnabled == true or forceDeactivate then
 			flightEnabled = false
 			if core.heartbeatFunctions["Flight"] then
 				core.StopAnim("flyMove")
 				core.StopAnim("flyIdle")
-				heartbeatFunctions["Flight"] = nil
+				core.heartbeatFunctions["Flight"] = nil
 				core.humanoid.WalkSpeed = core.defaultWalkSpeed
 				core.humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
 			end
@@ -292,10 +346,10 @@ return function(core)
 			flightEnabled = true
 			if core.heartbeatFunctions["Flight"] == nil then
 				core.humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-				heartbeatFunctions["Flight"] = OnFlightHeartbeat
+				core.heartbeatFunctions["Flight"] = OnFlightHeartbeat
 			end
 		end
-		core.ButtonCosmetic(button, flightEnabled)
+		core.ButtonCosmetic(core.ui.flightToggle.Self, flightEnabled)
 	end
 
 	speedEnabled = false
@@ -392,7 +446,7 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnSpeed(button, forceDeactivate)
+	function mainFunctions.OnSpeed(forceDeactivate)
 		if speedEnabled == true or forceDeactivate then
 			speedEnabled = false
 			if core.heartbeatFunctions["Speed"] then
@@ -401,18 +455,18 @@ return function(core)
 				core.heartbeatFunctions["Speed"] = nil
 			end
 		elseif speedEnabled == false then
-			if type(tonumber(core.ui["speed".. "Input".. "MaxSpeed"].Text)) == "number" then
-				maxSpeed = core.ui["speed".. "Input".. "MaxSpeed"].Text
+			if type(tonumber(core.ui["speed".. "Input".. "MaxSpeed"].Self.Text)) == "number" then
+				maxSpeed = core.ui["speed".. "Input".. "MaxSpeed"].Self.Text
 			end
-			if type(tonumber(core.ui["speed".. "Input".. "Acceleration"].Text)) == "number" then
-				accel = core.ui["speed".. "Input".. "Acceleration"].Text
+			if type(tonumber(core.ui["speed".. "Input".. "Acceleration"].Self.Text)) == "number" then
+				accel = core.ui["speed".. "Input".. "Acceleration"].Self.Text
 			end
 			speedEnabled = true
 			if core.heartbeatFunctions["Speed"] == nil then
 				core.heartbeatFunctions["Speed"] = OnSpeedHeartbeat
 			end
 		end
-		core.ButtonCosmetic(button, speedEnabled)
+		core.ButtonCosmetic(core.ui.speedToggle.Self, speedEnabled)
 	end
 
 	local espEnabled = false
@@ -423,22 +477,80 @@ return function(core)
 			elapsed = 0
 			espLoopStart = tick()
 			for i,v in pairs(core.currentPlayerList) do
-				if i.Character and i.Character ~= core.character and elapsed <= 0.5 then
+				if i.Character and i.Character ~= core.character then
 					if not i.Character:FindFirstChild("ESPHighlight") then
 						local highlight = Instance.new("Highlight")
 						highlight.Parent = i.Character
 						highlight.Name = "ESPHighlight"
-						highlight.FillTransparency = 0.5
+						highlight.FillTransparency = 0.3
 						highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-						highlight.OutlineColor = core.globalConfigs.espFillCol
-						highlight.FillColor = core.globalConfigs.espOutlineCol
+						local outerColor = i.TeamColor.Color
+						local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
+						highlight.OutlineColor = outerColor
+						highlight.FillColor = innerColor
+						if not highlight:FindFirstChild("ESPBillboardName") then
+							local billboardName = Instance.new("BillboardGui")
+							billboardName.Parent = highlight
+							billboardName.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
+							billboardName.AlwaysOnTop = true
+							billboardName.LightInfluence = 0
+							billboardName.Size = UDim2.new(0, 200, 0, 50)
+							billboardName.StudsOffset = Vector3.new(0, 4, 0)
+							billboardName.Name = "ESPBillboardName"
+							
+							local nameLabel = Instance.new("TextLabel")
+							nameLabel.BackgroundTransparency = 1
+							nameLabel.Parent = billboardName
+							nameLabel.Size = UDim2.new(0, 200, 0, 50)
+							nameLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold)
+							nameLabel.Text = i.Name
+							nameLabel.TextSize = 14
+							nameLabel.TextColor3 = outerColor
+							nameLabel.TextStrokeTransparency = 0
+							nameLabel.TextStrokeColor3 = innerColor
+							nameLabel.Name = "ESPName"
+							
+							local billboardIndicator = Instance.new("BillboardGui")
+							billboardIndicator.Parent = highlight
+							billboardIndicator.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
+							billboardIndicator.AlwaysOnTop = true
+							billboardIndicator.LightInfluence = 0
+							billboardIndicator.Size = UDim2.new(0, 200, 0, 50)
+							billboardIndicator.StudsOffset = Vector3.new(0, 0, -1)
+							billboardIndicator.Name = "ESPBillboardIndicator"
+
+							local indicatorLabel = Instance.new("TextLabel")
+							indicatorLabel.BackgroundTransparency = 1
+							indicatorLabel.Parent = billboardIndicator
+							indicatorLabel.Size = UDim2.new(0, 200, 0, 50)
+							indicatorLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold)
+							indicatorLabel.Text = "[]"
+							indicatorLabel.TextSize = 41
+							indicatorLabel.TextColor3 = outerColor
+							indicatorLabel.TextStrokeTransparency = 0
+							indicatorLabel.TextStrokeColor3 = innerColor
+							indicatorLabel.Name = "ESPIndicator"
+						end
+					elseif i.TeamColor.Color ~= i.Character.ESPHighlight.OutlineColor then
+						local highlight = i.Character.ESPHighlight
+						local outerColor = i.TeamColor.Color
+						local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
+						highlight.OutlineColor = outerColor
+						highlight.FillColor = innerColor
+						if highlight:FindFirstChild("ESPBillboardName") then
+							highlight.ESPBillboardName.ESPName.TextColor3 = outerColor
+							highlight.ESPBillboardName.ESPName.TextStrokeColor3 = innerColor
+							
+							highlight.ESPBillboardIndicator.ESPIndicator.TextColor3 = outerColor
+							highlight.ESPBillboardIndicator.ESPIndicator.TextStrokeColor3 = innerColor
+						end
 					end
 				end
 			end
 		end
 	end
-
-	function mainFunctions.OnEsp(button, forceDeactivate)
+	
+	function mainFunctions.OnEsp(forceDeactivate)
 		if espEnabled == true or forceDeactivate then
 			espEnabled = false
 			for i,v in pairs(core.currentPlayerList) do
@@ -458,12 +570,20 @@ return function(core)
 				core.heartbeatFunctions["Esp"] = OnEspHeartbeat
 			end
 		end
-		core.ButtonCosmetic(button, espEnabled)
+		core.ButtonCosmetic(core.ui.espToggle.Self, espEnabled)
 	end
 	
 	function core.InternalFrames()
-		core.InternalFrameConstructor(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.")
-		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {250, 1000}, "speed", "Go really fast. Speed picker in box")
+		local layoutOrder = 0
+		core.InternalFrameConstructor(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {250, 1000}, "speed", "Go really fast. Speed picker in box", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnFlight, {}, {}, "flight", "Advised use with float on, and with/without speed on", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnTeleport, {"NormalOffset"}, {0.1}, "teleport", "Middle click to teleport to the cursor position.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnEsp, {}, {}, "esp", "Esp color will be set based on assigned Team.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnExplode, {"BlastRadius", "DestroyRadius"}, {5, 0}, "explode", "DestroyRadius = 0 kill selected part, > 0 destroy in radius.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnMusic, {"AssetId", "Volume"}, {"rbxassetid", 0.5}, "music", "Enter rbxassetid of a published sound asset.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnSpin, {}, {}, "spin", "Spin around in circles if you want..", layoutOrder) layoutOrder += 1
+		layoutOrder += 100
 	end
 
 	return mainFunctions

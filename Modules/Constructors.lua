@@ -83,7 +83,7 @@ return function(core)
 				elseif key == "Misc" then
 					if value["Func"] then
 						obj.MouseButton1Click:Connect(function()
-							value["Func"](obj)
+							value["Func"]()
 						end)
 					end
 					if value["UiListLayout"] then
@@ -123,7 +123,7 @@ return function(core)
 		end
 	end
 	
-	function core.InternalFrameConstructor(func, boxTitles, boxPlaceholders, title, desc)
+	function core.InternalFrameConstructor(func, boxTitles, boxPlaceholders, title, desc, layoutOrder)
 		core.ui[title] = {
 			Self = nil,
 			Type = "Frame",
@@ -132,9 +132,9 @@ return function(core)
 			BackgroundTransparency = 1,
 			BorderColor3 = Color3.fromRGB(255, 255, 255),
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0.06, 0),
+			Size = UDim2.new(1, 0, 0.045, 0),
 			ZIndex = 1,
-			LayoutOrder = 0,
+			LayoutOrder = layoutOrder,
 			ClipsDescendants = false,
 		}
 		core.ui[title.. "Border"] = {
