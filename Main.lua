@@ -92,6 +92,7 @@ local function Startup()
 		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))(core)
 		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))(core)
 		core.ui = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Ui.lua"))(core)
+		task.wait(0.1)
 		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))())
 	else
 		require(script:WaitForChild("Constructors"))(core)
