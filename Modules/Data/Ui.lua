@@ -184,7 +184,6 @@ return function(core)
 			BackgroundTransparency = 1,
 			Position = UDim2.new(0, 0, 0.071, 0),
 			Size = UDim2.new(0.086, 0, 0.929, 0),
-			ZIndex = 1,
 			ClipsDescendants = true,
 		},
 		selected = {
@@ -196,7 +195,7 @@ return function(core)
 			BackgroundTransparency = 0.8,
 			Position = UDim2.new(0, 0, 0, 0),
 			Size = UDim2.new(1, 0, 0.086, 0),
-			ZIndex = 2,
+			ZIndex = 1,
 			ClipsDescendants = true,
 		},
 		selectedHighlight = {
@@ -208,7 +207,7 @@ return function(core)
 			BackgroundTransparency = 0,
 			Position = UDim2.new(0, 0, 0, 0),
 			Size = UDim2.new(0.13, 0, 1, 0),
-			ZIndex = 1,
+			ZIndex = 2,
 			ClipsDescendants = true,
 		},
 		sideBarInner = {
@@ -219,7 +218,6 @@ return function(core)
 			BackgroundTransparency = 1,
 			Position = UDim2.new(0, 0, 0, 0),
 			Size = UDim2.new(1, 0, 1, 0),
-			ZIndex = 1,
 			ClipsDescendants = false,
 			Misc = {
 				UiListLayout = 1
