@@ -100,7 +100,6 @@ local function Startup()
 		core.trails = require(script.Data:WaitForChild("Trails"))(core)
 		core.particles = require(script.Data:WaitForChild("Particles"))(core)
 		core.ui = require(script.Data:WaitForChild("Ui"))(core)
-		print(core.ui.deactivateTextLabelName)
 		core.anims = core.AnimationConstructor(require(script.Data:WaitForChild("Anims")))
 	end
 	
@@ -123,10 +122,10 @@ players.PlayerRemoving:Connect(function(player)
 end)
 
 runService.Heartbeat:Connect(function(deltaTime)
-	--[[
 	for i, v in pairs(core.heartbeatFunctions) do
 		v(deltaTime)
 	end
+	--[[
 	local fps = 1 / deltaTime
 	config["fpsText"].Self.Text = string.format("FPS: %03d", math.floor(fps))
 	local speed = core.hrp.CFrame:VectorToObjectSpace(core.hrp.AssemblyLinearVelocity)

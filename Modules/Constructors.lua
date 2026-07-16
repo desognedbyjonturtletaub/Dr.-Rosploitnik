@@ -8,6 +8,7 @@ return function(core)
 			animation.AnimationId = v["Id"]
 			v["Self"] = core.humanoid:LoadAnimation(animation)
 		end
+		return animTable
 	end
 
 	function core.ParticleConstructor()
@@ -300,6 +301,23 @@ return function(core)
 					GradientType = 2,
 					CornerRadius = UDim.new(0, 4)
 				}
+			}
+			core.ui[title.. "InputTitle".. boxTitles[i]] = {
+				Self = nil,
+				Name = title.. "InputTitle".. boxTitles[i],
+				Parent = title.. "Input".. boxTitles[i],
+				Type = "TextLabel",
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				BackgroundTransparency = 1,
+				Position = UDim2.new(0.5, 0, -0.797, 0),
+				Size = UDim2.new(1.2, 0, 0.563, 0),
+				FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold),
+				Text = boxTitles[i],
+				TextScaled = true,
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+				TextSize = 14,
+				TextWrapped = true,
+				TextStrokeTransparency = 1,
 			}
 		end
 	end

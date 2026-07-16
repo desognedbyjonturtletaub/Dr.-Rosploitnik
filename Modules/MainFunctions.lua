@@ -278,17 +278,8 @@ return function(core)
 		hrp.AssemblyAngularVelocity = Vector3.zero
 	end
 
-	function mainFunctions.OnFlight(button)
-		if button == nil then
-			return
-		end
-		if flightEnabled == false then
-			flightEnabled = true
-			if core.heartbeatFunctions["Flight"] == nil then
-				core.humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-				heartbeatFunctions["Flight"] = OnFlightHeartbeat
-			end
-		elseif flightEnabled == true then
+	function mainFunctions.OnFlight(button, forceDeactivate)
+		if flightEnabled == true or forceDeactivate then
 			flightEnabled = false
 			if core.heartbeatFunctions["Flight"] then
 				core.StopAnim("flyMove")
@@ -296,6 +287,12 @@ return function(core)
 				heartbeatFunctions["Flight"] = nil
 				core.humanoid.WalkSpeed = core.defaultWalkSpeed
 				core.humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+			end
+		elseif flightEnabled == false then
+			flightEnabled = true
+			if core.heartbeatFunctions["Flight"] == nil then
+				core.humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+				heartbeatFunctions["Flight"] = OnFlightHeartbeat
 			end
 		end
 		core.ButtonCosmetic(button, flightEnabled)
@@ -382,7 +379,7 @@ return function(core)
 				currentSpeed = math.clamp(currentSpeed + (accel * deltaTime),  0, maxSpeed)
 				local speedLocalSpace = core.hrp.CFrame:VectorToObjectSpace(core.hrp.AssemblyLinearVelocity)
 				local speedLocalSpace = Vector3.new(speedLocalSpace.X / (1 + (1/deltaTime)), speedLocalSpace.Y, -currentSpeed)
-				hrp.AssemblyLinearVelocity = core.hrp.CFrame:VectorToWorldSpace(speedLocalSpace)
+				core.hrp.AssemblyLinearVelocity = core.hrp.CFrame:VectorToWorldSpace(speedLocalSpace)
 			else
 				core.StopAnim("boost")
 				currentSpeed = math.clamp(currentSpeed + (accel * deltaTime),  0, maxSpeed)
@@ -395,27 +392,24 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnSpeed(button)
-		if button == nil then
-			return
-		end
-		if speedEnabled == false then
-			if type(tonumber(button.Parent.SpeedInputTopSpeed.Text)) == "number" then
-				maxSpeed = button.Parent.SpeedInputTopSpeed.Text
-			end
-			if type(tonumber(button.Parent.SpeedInputAcceleration.Text)) == "number" then
-				accel = button.Parent.SpeedInputAcceleration.Text
-			end
-			speedEnabled = true
-			if core.heartbeatFunctions["Speed"] == nil then
-				core.heartbeatFunctions["Speed"] = OnSpeedHeartbeat
-			end
-		elseif speedEnabled == true then
+	function mainFunctions.OnSpeed(button, forceDeactivate)
+		if speedEnabled == true or forceDeactivate then
 			speedEnabled = false
 			if core.heartbeatFunctions["Speed"] then
 				core.StopAnim("boost")
 				SpeedDestroyEffects()
 				core.heartbeatFunctions["Speed"] = nil
+			end
+		elseif speedEnabled == false then
+			if type(tonumber(core.ui["speed".. "Input".. "MaxSpeed"].Text)) == "number" then
+				maxSpeed = core.ui["speed".. "Input".. "MaxSpeed"].Text
+			end
+			if type(tonumber(core.ui["speed".. "Input".. "Acceleration"].Text)) == "number" then
+				accel = core.ui["speed".. "Input".. "Acceleration"].Text
+			end
+			speedEnabled = true
+			if core.heartbeatFunctions["Speed"] == nil then
+				core.heartbeatFunctions["Speed"] = OnSpeedHeartbeat
 			end
 		end
 		core.ButtonCosmetic(button, speedEnabled)
@@ -444,17 +438,8 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnEsp(button)
-		if button == nil then
-			return
-		end
-		if espEnabled == false then
-			espEnabled = true
-			if core.heartbeatFunctions["Esp"] == nil then
-				espLoopStart = tick()
-				core.heartbeatFunctions["Esp"] = OnEspHeartbeat
-			end
-		elseif espEnabled == true then
+	function mainFunctions.OnEsp(button, forceDeactivate)
+		if espEnabled == true or forceDeactivate then
 			espEnabled = false
 			for i,v in pairs(core.currentPlayerList) do
 				if i.Character and i.Character ~= core.character then
@@ -466,13 +451,19 @@ return function(core)
 			if core.heartbeatFunctions["Esp"] then
 				core.heartbeatFunctions["Esp"] = nil
 			end
+		elseif espEnabled == false then
+			espEnabled = true
+			if core.heartbeatFunctions["Esp"] == nil then
+				espLoopStart = tick()
+				core.heartbeatFunctions["Esp"] = OnEspHeartbeat
+			end
 		end
 		core.ButtonCosmetic(button, espEnabled)
 	end
 	
 	function core.InternalFrames()
 		core.InternalFrameConstructor(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.")
-		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"Max Speed", "Acceleration"}, {250, 1000}, "speed", "Go really fast. Speed picker in box")
+		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {250, 1000}, "speed", "Go really fast. Speed picker in box")
 	end
 
 	return mainFunctions
