@@ -86,16 +86,16 @@ local function Startup()
 	SetGlobals()
 	
 	if not core.isStudio then -- REMOVE WHEN UPLOADING TO GITHUB!!!! REMEMBER THIS PLEEEAASSEE!!!
-		loadstring(game:HttpGet(core.gitBranch.. "/Modules/Constructors.lua"))(core)
-		core.mainFunctions = loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))(core)
-		core.sounds = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Sounds.lua"))(core)
-		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))(core)
-		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))(core)
-		core.ui = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Ui.lua"))(core)
+		loadstring(game:HttpGet(core.gitBranch.. "/Modules/Constructors.lua"))()(core)
+		core.mainFunctions = loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))()(core)
+		core.sounds = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Sounds.lua"))()(core)
+		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))()(core)
+		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))()(core)
+		core.ui = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Ui.lua"))()(core)
 		task.wait(0.1)
 		--print("Debug1")
 		--core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))())
-		local anims = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))()
+		local anims = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))()(core)
 		local animConstructed = core.AnimationConstructor(anims)
 		core.anims = animConstructed
 	else
