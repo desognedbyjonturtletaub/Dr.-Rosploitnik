@@ -111,6 +111,12 @@ player.CharacterAdded:Connect(function(char)
 	core.humanoid = char:WaitForChild("Humanoid")
 	core.hrp = char:WaitForChild("HumanoidRootPart")
 	core.defaultWalkSpeed = core.humanoid.WalkSpeed
+	core.defaultJumpPower = core.humanoid.JumpPower
+	if not core.isStudio then -- REMOVE WHEN UPLOADING TO GITHUB!!!! REMEMBER THIS PLEEEAASSEE!!!
+		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/core.anims.lua"))())
+	else
+		core.anims = core.AnimationConstructor(require(script.Data:WaitForChild("Anims")))
+	end
 end)
 
 players.PlayerAdded:Connect(function(player)

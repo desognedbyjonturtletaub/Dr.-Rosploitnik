@@ -83,7 +83,7 @@ return function(core)
 				elseif key == "Misc" then
 					if value["Func"] then
 						obj.MouseButton1Click:Connect(function()
-							value["Func"]()
+							value["Func"](obj)
 						end)
 					end
 					if value["UiListLayout"] then

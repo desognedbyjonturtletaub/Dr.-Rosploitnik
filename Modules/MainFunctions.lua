@@ -27,6 +27,7 @@ return function(core)
 	end
 	
 	function core.ButtonCosmetic(button, bool)
+		print("WTFFFF".. " ".. tostring(bool))
 		local pressSound = core.soundsFolder:FindFirstChild("Press")
 		if pressSound then pressSound:Play() end
 		if bool == true then
@@ -75,7 +76,7 @@ return function(core)
 	
 	local floatEnabled = false
 	function mainFunctions.OnFloat(forceDeactivate)
-		if floatEnabled == true or forceDeactivate then
+		if floatEnabled == true or forceDeactivate == true then
 			floatEnabled = false
 			workspace.Gravity = core.defaultGravity
 		elseif floatEnabled == false then
@@ -99,7 +100,7 @@ return function(core)
 	end
 	
 	function core.OnSpam(button, forceDeactivate)
-		if spamEnabled == true or forceDeactivate then
+		if spamEnabled == true or forceDeactivate == true then
 			spamEnabled = false
 			if core.heartbeatFunctions["Spam"] then
 				heartbeatFunctions["Spam"] = nil
@@ -133,7 +134,7 @@ return function(core)
 
 	local musicEnabled = false
 	function mainFunctions.OnMusic(forceDeactivate)
-		if musicEnabled == true or forceDeactivate then
+		if musicEnabled == true or forceDeactivate == true then
 			musicEnabled = false
 			core.soundsFolder.Music:Stop()
 		elseif musicEnabled == false then
@@ -153,7 +154,7 @@ return function(core)
 
 	local spinEnabled = false
 	function mainFunctions.OnSpin(forceDeactivate)
-		if spinEnabled == true or forceDeactivate then
+		if spinEnabled == true or forceDeactivate == true then
 			spinEnabled = false
 			core.StopAnim("spin")
 		elseif spinEnabled == false then
@@ -180,7 +181,7 @@ return function(core)
 	end
 	
 	function mainFunctions.OnTeleport(forceDeactivate)
-		if teleportEnabled == true or forceDeactivate then
+		if teleportEnabled == true or forceDeactivate == true then
 			teleportEnabled = false
 			if teleportClickFunc ~= nil then
 				teleportClickFunc:Disconnect()
@@ -248,7 +249,7 @@ return function(core)
 	end
 	
 	function mainFunctions.OnExplode(button, forceDeactivate)
-		if explodeEnabled == true or forceDeactivate then
+		if explodeEnabled == true or forceDeactivate == true then
 			explodeEnabled = false
 			if explodeClickFunc ~= nil then
 				explodeClickFunc:Disconnect()
@@ -333,7 +334,7 @@ return function(core)
 	end
 
 	function mainFunctions.OnFlight(forceDeactivate)
-		if flightEnabled == true or forceDeactivate then
+		if flightEnabled == true or forceDeactivate == true then
 			flightEnabled = false
 			if core.heartbeatFunctions["Flight"] then
 				core.StopAnim("flyMove")
@@ -355,7 +356,7 @@ return function(core)
 	speedEnabled = false
 	local currentSpeed = nil
 	local accel = 1000
-	local maxSpeed = 250
+	local maxSpeed = 175
 	local function SpeedDestroyEffects()
 		if core.hrp:FindFirstChild("RosploitnikSpeedAttachment") then
 			tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70}):Play()
@@ -375,7 +376,12 @@ return function(core)
 			tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70 + math.clamp(core.hrp.AssemblyLinearVelocity.Magnitude/5, 0, 50)}):Play()
 			if currentSpeed == nil  then
 				core.soundsFolder.Wind:Resume()
-
+				
+				if core.hrp:FindFirstChild("RosploitnikSpeedAttachment") then
+					core.hrp.RosploitnikSpeedAttachment:Destroy()
+					core.hrp.RosploitnikTrailAttachment1:Destroy()
+					core.hrp.RosploitnikTrailAttachment2:Destroy()
+				end
 				local particleAttachment = Instance.new("Attachment")
 				particleAttachment.Parent = core.hrp
 				particleAttachment.Name = "RosploitnikSpeedAttachment"
@@ -433,7 +439,9 @@ return function(core)
 				currentSpeed = math.clamp(currentSpeed + (accel * deltaTime),  0, maxSpeed)
 				local speedLocalSpace = core.hrp.CFrame:VectorToObjectSpace(core.hrp.AssemblyLinearVelocity)
 				local speedLocalSpace = Vector3.new(speedLocalSpace.X / (1 + (1/deltaTime)), speedLocalSpace.Y, -currentSpeed)
+				core.hrp.CFrame = core.hrp.CFrame:Lerp(CFrame.lookAt(core.hrp.Position, core.hrp.Position + moveDir,  Vector3.yAxis), 0.3 * (1 - deltaTime))
 				core.hrp.AssemblyLinearVelocity = core.hrp.CFrame:VectorToWorldSpace(speedLocalSpace)
+				core.hrp.AssemblyAngularVelocity = Vector3.zero
 			else
 				core.StopAnim("boost")
 				currentSpeed = math.clamp(currentSpeed + (accel * deltaTime),  0, maxSpeed)
@@ -447,10 +455,11 @@ return function(core)
 	end
 
 	function mainFunctions.OnSpeed(forceDeactivate)
-		if speedEnabled == true or forceDeactivate then
+		if speedEnabled == true or forceDeactivate == true then
 			speedEnabled = false
 			if core.heartbeatFunctions["Speed"] then
 				core.StopAnim("boost")
+				currentSpeed = nil
 				SpeedDestroyEffects()
 				core.heartbeatFunctions["Speed"] = nil
 			end
@@ -478,71 +487,73 @@ return function(core)
 			espLoopStart = tick()
 			for i,v in pairs(core.currentPlayerList) do
 				if i.Character and i.Character ~= core.character then
-					if not i.Character:FindFirstChild("ESPHighlight") then
-						local highlight = Instance.new("Highlight")
-						highlight.Parent = i.Character
-						highlight.Name = "ESPHighlight"
-						highlight.FillTransparency = 0.3
-						highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-						local outerColor = i.TeamColor.Color
-						local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
-						highlight.OutlineColor = outerColor
-						highlight.FillColor = innerColor
-						if not highlight:FindFirstChild("ESPBillboardName") then
-							local billboardName = Instance.new("BillboardGui")
-							billboardName.Parent = highlight
-							billboardName.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
-							billboardName.AlwaysOnTop = true
-							billboardName.LightInfluence = 0
-							billboardName.Size = UDim2.new(0, 200, 0, 50)
-							billboardName.StudsOffset = Vector3.new(0, 4, 0)
-							billboardName.Name = "ESPBillboardName"
-							
-							local nameLabel = Instance.new("TextLabel")
-							nameLabel.BackgroundTransparency = 1
-							nameLabel.Parent = billboardName
-							nameLabel.Size = UDim2.new(0, 200, 0, 50)
-							nameLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold)
-							nameLabel.Text = i.Name
-							nameLabel.TextSize = 14
-							nameLabel.TextColor3 = outerColor
-							nameLabel.TextStrokeTransparency = 0
-							nameLabel.TextStrokeColor3 = innerColor
-							nameLabel.Name = "ESPName"
-							
-							local billboardIndicator = Instance.new("BillboardGui")
-							billboardIndicator.Parent = highlight
-							billboardIndicator.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
-							billboardIndicator.AlwaysOnTop = true
-							billboardIndicator.LightInfluence = 0
-							billboardIndicator.Size = UDim2.new(0, 200, 0, 50)
-							billboardIndicator.StudsOffset = Vector3.new(0, 0, -1)
-							billboardIndicator.Name = "ESPBillboardIndicator"
+					if i.Character:FindFirstChild("HumanoidRootPart") then
+						if not i.Character:FindFirstChild("ESPHighlight") then
+							local highlight = Instance.new("Highlight")
+							highlight.Parent = i.Character
+							highlight.Name = "ESPHighlight"
+							highlight.FillTransparency = 0.3
+							highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+							local outerColor = i.TeamColor.Color
+							local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
+							highlight.OutlineColor = outerColor
+							highlight.FillColor = innerColor
+							if not highlight:FindFirstChild("ESPBillboardName") then
+								local billboardName = Instance.new("BillboardGui")
+								billboardName.Parent = highlight
+								billboardName.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
+								billboardName.AlwaysOnTop = true
+								billboardName.LightInfluence = 0
+								billboardName.Size = UDim2.new(0, 200, 0, 50)
+								billboardName.StudsOffset = Vector3.new(0, 4, 0)
+								billboardName.Name = "ESPBillboardName"
+								
+								local nameLabel = Instance.new("TextLabel")
+								nameLabel.BackgroundTransparency = 1
+								nameLabel.Parent = billboardName
+								nameLabel.Size = UDim2.new(0, 200, 0, 50)
+								nameLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold)
+								nameLabel.Text = i.Name
+								nameLabel.TextSize = 14
+								nameLabel.TextColor3 = outerColor
+								nameLabel.TextStrokeTransparency = 0
+								nameLabel.TextStrokeColor3 = innerColor
+								nameLabel.Name = "ESPName"
+								
+								local billboardIndicator = Instance.new("BillboardGui")
+								billboardIndicator.Parent = highlight
+								billboardIndicator.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
+								billboardIndicator.AlwaysOnTop = true
+								billboardIndicator.LightInfluence = 0
+								billboardIndicator.Size = UDim2.new(0, 200, 0, 50)
+								billboardIndicator.StudsOffset = Vector3.new(0, 0, -1)
+								billboardIndicator.Name = "ESPBillboardIndicator"
 
-							local indicatorLabel = Instance.new("TextLabel")
-							indicatorLabel.BackgroundTransparency = 1
-							indicatorLabel.Parent = billboardIndicator
-							indicatorLabel.Size = UDim2.new(0, 200, 0, 50)
-							indicatorLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold)
-							indicatorLabel.Text = "[]"
-							indicatorLabel.TextSize = 41
-							indicatorLabel.TextColor3 = outerColor
-							indicatorLabel.TextStrokeTransparency = 0
-							indicatorLabel.TextStrokeColor3 = innerColor
-							indicatorLabel.Name = "ESPIndicator"
-						end
-					elseif i.TeamColor.Color ~= i.Character.ESPHighlight.OutlineColor then
-						local highlight = i.Character.ESPHighlight
-						local outerColor = i.TeamColor.Color
-						local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
-						highlight.OutlineColor = outerColor
-						highlight.FillColor = innerColor
-						if highlight:FindFirstChild("ESPBillboardName") then
-							highlight.ESPBillboardName.ESPName.TextColor3 = outerColor
-							highlight.ESPBillboardName.ESPName.TextStrokeColor3 = innerColor
-							
-							highlight.ESPBillboardIndicator.ESPIndicator.TextColor3 = outerColor
-							highlight.ESPBillboardIndicator.ESPIndicator.TextStrokeColor3 = innerColor
+								local indicatorLabel = Instance.new("TextLabel")
+								indicatorLabel.BackgroundTransparency = 1
+								indicatorLabel.Parent = billboardIndicator
+								indicatorLabel.Size = UDim2.new(0, 200, 0, 50)
+								indicatorLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json", Enum.FontWeight.Bold)
+								indicatorLabel.Text = "[]"
+								indicatorLabel.TextSize = 41
+								indicatorLabel.TextColor3 = outerColor
+								indicatorLabel.TextStrokeTransparency = 0
+								indicatorLabel.TextStrokeColor3 = innerColor
+								indicatorLabel.Name = "ESPIndicator"
+							end
+						elseif i.TeamColor.Color ~= i.Character.ESPHighlight.OutlineColor then
+							local highlight = i.Character.ESPHighlight
+							local outerColor = i.TeamColor.Color
+							local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
+							highlight.OutlineColor = outerColor
+							highlight.FillColor = innerColor
+							if highlight:FindFirstChild("ESPBillboardName") then
+								highlight.ESPBillboardName.ESPName.TextColor3 = outerColor
+								highlight.ESPBillboardName.ESPName.TextStrokeColor3 = innerColor
+								
+								highlight.ESPBillboardIndicator.ESPIndicator.TextColor3 = outerColor
+								highlight.ESPBillboardIndicator.ESPIndicator.TextStrokeColor3 = innerColor
+							end
 						end
 					end
 				end
@@ -551,7 +562,7 @@ return function(core)
 	end
 	
 	function mainFunctions.OnEsp(forceDeactivate)
-		if espEnabled == true or forceDeactivate then
+		if espEnabled == true or forceDeactivate == true then
 			espEnabled = false
 			for i,v in pairs(core.currentPlayerList) do
 				if i.Character and i.Character ~= core.character then
@@ -576,7 +587,7 @@ return function(core)
 	function core.InternalFrames()
 		local layoutOrder = 0
 		core.InternalFrameConstructor(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {250, 1000}, "speed", "Go really fast. Speed picker in box", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {175, 1000}, "speed", "Set acceleration for the time needed to hit max speed.", layoutOrder) layoutOrder += 1
 		core.InternalFrameConstructor(mainFunctions.OnFlight, {}, {}, "flight", "Advised use with float on, and with/without speed on", layoutOrder) layoutOrder += 1
 		core.InternalFrameConstructor(mainFunctions.OnTeleport, {"NormalOffset"}, {0.1}, "teleport", "Middle click to teleport to the cursor position.", layoutOrder) layoutOrder += 1
 		core.InternalFrameConstructor(mainFunctions.OnEsp, {}, {}, "esp", "Esp color will be set based on assigned Team.", layoutOrder) layoutOrder += 1
