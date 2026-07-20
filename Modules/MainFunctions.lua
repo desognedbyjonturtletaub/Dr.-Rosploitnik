@@ -14,7 +14,7 @@ return function(core)
 	function core.StopAnim(string)
 		core.anims[string].Self:Stop()
 	end
-	
+
 	function core.PlayAnim(string, speed)
 		if core.anims[string].Self.IsPlaying == false then
 			core.anims[string].Self:Play()
@@ -25,9 +25,8 @@ return function(core)
 			end
 		end
 	end
-	
+
 	function core.ButtonCosmetic(button, bool)
-		print("WTFFFF".. " ".. tostring(bool))
 		local pressSound = core.soundsFolder:FindFirstChild("Press")
 		if pressSound then pressSound:Play() end
 		if bool == true then
@@ -42,7 +41,7 @@ return function(core)
 			button.Parent.ImageColor3 = core.globalConfigs.uiSecondaryCol
 		end
 	end
-	
+
 	function core.OnSideBarButton(button)
 		if core.ui.selected.Self then
 			local selectBox = core.ui.selected.Self
@@ -50,7 +49,7 @@ return function(core)
 			core.soundsFolder:FindFirstChild("Page"):Play()
 		end
 	end
-	
+
 	local open = true
 	function core.UiCloseOpen()
 		if not core.ui.holder.Self then
@@ -67,13 +66,13 @@ return function(core)
 			core.soundsFolder:FindFirstChild("Open"):Play()
 		end
 	end
-	
+
 	function core.DisableAll()
 		for i, v in pairs(mainFunctions) do
 			v(true)
 		end
 	end
-	
+
 	local floatEnabled = false
 	function mainFunctions.OnFloat(forceDeactivate)
 		if floatEnabled == true or forceDeactivate == true then
@@ -98,7 +97,7 @@ return function(core)
 			core.generalChannel:SendAsync(spamMessage)
 		end
 	end
-	
+
 	function core.OnSpam(button, forceDeactivate)
 		if spamEnabled == true or forceDeactivate == true then
 			spamEnabled = false
@@ -121,15 +120,35 @@ return function(core)
 		core.ButtonCosmetic(button, spamEnabled)
 	end
 	
-	function core.OnPlayerTeleport(button, forceDeactivate)
-		local text = ""
+	local playerTeleportEnabled = false
+	local text = ""
+	function core.OnPlayerTeleportHeartbeat()
 		if players:FindFirstChild(text) then
 			local otherPlayer = players[text]
 			if otherPlayer.Character then
 				local otherCharacter = otherPlayer.Character
-				
+				if otherCharacter.PrimaryPart then
+					local otherPrimaryPart = otherCharacter.PrimaryPart
+					core.hrp.CFrame = otherPrimaryPart.CFrame
+				end
 			end
 		end
+	end
+
+	function mainFunctions.OnPlayerTeleport(forceDeactivate)
+		if playerTeleportEnabled == true or forceDeactivate == true then
+			playerTeleportEnabled = false
+			if core.heartbeatFunctions["PlayerTeleport"] then
+				core.heartbeatFunctions["PlayerTeleport"] = nil
+			end
+		elseif playerTeleportEnabled == false then
+			text = core.ui["playerTeleport".. "Input".. "PlayerName"].Self.Text
+			if core.heartbeatFunctions["PlayerTeleport"] == nil then
+				core.heartbeatFunctions["PlayerTeleport"] = core.OnPlayerTeleportHeartbeat
+			end
+			playerTeleportEnabled = true
+		end
+		core.ButtonCosmetic(core.ui.playerTeleportToggle.Self, playerTeleportEnabled)
 	end
 
 	local musicEnabled = false
@@ -164,7 +183,7 @@ return function(core)
 		end
 		core.ButtonCosmetic(core.ui.spinToggle.Self, spinEnabled)
 	end
-	
+
 	local endNormalOffset = .1
 	local teleportEnabled = false
 	local teleportClickFunc = nil
@@ -179,7 +198,7 @@ return function(core)
 		end
 		return nil
 	end
-	
+
 	function mainFunctions.OnTeleport(forceDeactivate)
 		if teleportEnabled == true or forceDeactivate == true then
 			teleportEnabled = false
@@ -233,7 +252,7 @@ return function(core)
 		end
 		core.ButtonCosmetic(core.ui.teleportToggle.Self, teleportEnabled)
 	end
-	
+
 	local blastRadius = 5
 	local destroyRadius = 0
 	local explodeEnabled = false
@@ -247,7 +266,7 @@ return function(core)
 			part:Destroy()
 		end
 	end
-	
+
 	function mainFunctions.OnExplode(button, forceDeactivate)
 		if explodeEnabled == true or forceDeactivate == true then
 			explodeEnabled = false
@@ -376,7 +395,7 @@ return function(core)
 			tweenService:Create(workspace.CurrentCamera, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {FieldOfView = 70 + math.clamp(core.hrp.AssemblyLinearVelocity.Magnitude/5, 0, 50)}):Play()
 			if currentSpeed == nil  then
 				core.soundsFolder.Wind:Resume()
-				
+
 				if core.hrp:FindFirstChild("RosploitnikSpeedAttachment") then
 					core.hrp.RosploitnikSpeedAttachment:Destroy()
 					core.hrp.RosploitnikTrailAttachment1:Destroy()
@@ -507,7 +526,7 @@ return function(core)
 								billboardName.Size = UDim2.new(0, 200, 0, 50)
 								billboardName.StudsOffset = Vector3.new(0, 4, 0)
 								billboardName.Name = "ESPBillboardName"
-								
+
 								local nameLabel = Instance.new("TextLabel")
 								nameLabel.BackgroundTransparency = 1
 								nameLabel.Parent = billboardName
@@ -519,7 +538,7 @@ return function(core)
 								nameLabel.TextStrokeTransparency = 0
 								nameLabel.TextStrokeColor3 = innerColor
 								nameLabel.Name = "ESPName"
-								
+
 								local billboardIndicator = Instance.new("BillboardGui")
 								billboardIndicator.Parent = highlight
 								billboardIndicator.Adornee = i.Character.HumanoidRootPart or i.Character.PrimaryPart
@@ -550,7 +569,7 @@ return function(core)
 							if highlight:FindFirstChild("ESPBillboardName") then
 								highlight.ESPBillboardName.ESPName.TextColor3 = outerColor
 								highlight.ESPBillboardName.ESPName.TextStrokeColor3 = innerColor
-								
+
 								highlight.ESPBillboardIndicator.ESPIndicator.TextColor3 = outerColor
 								highlight.ESPBillboardIndicator.ESPIndicator.TextStrokeColor3 = innerColor
 							end
@@ -560,7 +579,7 @@ return function(core)
 			end
 		end
 	end
-	
+
 	function mainFunctions.OnEsp(forceDeactivate)
 		if espEnabled == true or forceDeactivate == true then
 			espEnabled = false
@@ -583,7 +602,7 @@ return function(core)
 		end
 		core.ButtonCosmetic(core.ui.espToggle.Self, espEnabled)
 	end
-	
+
 	function core.InternalFrames()
 		local layoutOrder = 0
 		core.InternalFrameConstructor(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.", layoutOrder) layoutOrder += 1
@@ -594,6 +613,7 @@ return function(core)
 		core.InternalFrameConstructor(mainFunctions.OnExplode, {"BlastRadius", "DestroyRadius"}, {5, 0}, "explode", "DestroyRadius = 0 kill selected part, > 0 destroy in radius.", layoutOrder) layoutOrder += 1
 		core.InternalFrameConstructor(mainFunctions.OnMusic, {"AssetId", "Volume"}, {"rbxassetid", 0.5}, "music", "Enter rbxassetid of a published sound asset.", layoutOrder) layoutOrder += 1
 		core.InternalFrameConstructor(mainFunctions.OnSpin, {}, {}, "spin", "Spin around in circles if you want..", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(mainFunctions.OnPlayerTeleport, {"PlayerName"}, {"Dr. R"}, "playerTeleport", "Teleport to a player with using player name (not display).", layoutOrder) layoutOrder += 1
 		layoutOrder += 100
 	end
 

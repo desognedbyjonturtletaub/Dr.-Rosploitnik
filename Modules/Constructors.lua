@@ -122,7 +122,7 @@ return function(core)
 			end
 		end
 	end
-	
+
 	function core.InternalFrameConstructor(func, boxTitles, boxPlaceholders, title, desc, layoutOrder)
 		core.ui[title] = {
 			Self = nil,
@@ -294,6 +294,7 @@ return function(core)
 				PlaceholderText = boxPlaceholders[i],
 				PlaceholderColor3 = Color3.fromRGB(255, 255, 255),
 				TextColor3 = Color3.fromRGB(255, 255, 255),
+				ClearTextOnFocus = false,
 				Text = "",
 				TextScaled = true,
 				TextSize = 14,

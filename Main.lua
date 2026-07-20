@@ -68,7 +68,8 @@ local function Startup()
 	core.humanoid = core.character:WaitForChild("Humanoid")
 	core.hrp = core.character:WaitForChild("HumanoidRootPart")
 	core.cam = workspace.CurrentCamera
-	core.generalChannel = textChatService.TextChannels:WaitForChild("RBXGeneral")
+	core.textChannels = textChatService:WaitForChild("TextChannels")
+	core.generalChannel = core.textChannels:WaitForChild("RBXGeneral")
 	core.mouse = player:GetMouse()
 
 	core.heartbeatFunctions = {}
@@ -86,13 +87,13 @@ local function Startup()
 	SetGlobals()
 	
 	if not core.isStudio then -- REMOVE WHEN UPLOADING TO GITHUB!!!! REMEMBER THIS PLEEEAASSEE!!!
-		loadstring(game:HttpGet(core.gitBranch.. "/Modules/Constructors.lua"))()(core)
-		core.mainFunctions = loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))()(core)
-		core.sounds = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Sounds.lua"))()(core)
-		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))()(core)
-		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))()(core)
-		core.ui = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Ui.lua"))()(core)
-		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))())
+		loadstring(game:HttpGet(core.gitBranch.. "/Constructors.lua"))(core)
+		core.mainFunctions = loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))(core)
+		core.sounds = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Sounds.lua"))(core)
+		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))(core)
+		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))(core)
+		core.ui = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Ui.lua"))(core)
+		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/core.anims.lua"))())
 	else
 		require(script:WaitForChild("Constructors"))(core)
 		core.mainFunctions = require(script:WaitForChild("MainFunctions"))(core)
@@ -128,8 +129,10 @@ players.PlayerRemoving:Connect(function(player)
 end)
 
 runService.Heartbeat:Connect(function(deltaTime)
-	for i, v in pairs(core.heartbeatFunctions) do
-		v(deltaTime)
+	if core.heartbeatFunctions then
+		for i, v in pairs(core.heartbeatFunctions) do
+			v(deltaTime)
+		end
 	end
 	--[[
 	local fps = 1 / deltaTime
@@ -141,15 +144,15 @@ end)
 
 
 function ScriptSetup()
-	game.StarterGui:SetCore("SendNotification", {
-		Title = "Dr. Rosploitnik",
-		Icon = "rbxassetid://105076512076789",
-		Text = "Loading Dr. Rosploitnik Now",
-	})
 	core.UiConstructor()
 	core.soundsFolder = core.SoundConstructor()
 	core.particlesFolder = core.ParticleConstructor()
 end
 
+game.StarterGui:SetCore("SendNotification", {
+	Title = "Dr. Rosploitnik",
+	Icon = "rbxassetid://105076512076789",
+	Text = "Loading Dr. Rosploitnik Now",
+})
 Startup()
 ScriptSetup()
