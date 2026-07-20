@@ -8,12 +8,15 @@ return function(core)
 			if player.Character then
 				local character = player.Character
 				if character:FindFirstChild("Gun") then
+					print("Char has gun!")
 					character:SetAttribute("ESPOverrideColour", Color3.fromRGB(75, 120, 255))
 				elseif character:FindFirstChild("Knife") then
+					print("Char has knife!")
 					character:SetAttribute("ESPOverrideColour", Color3.fromRGB(255, 0, 0))
 				end
 			end
 		end
+		core.ButtonCosmetic(core.ui.revealInnocentToggle.Self, false)
 	end
 	core.InternalFrameConstructor(core.mainFunctions.OnRevealNonInnocent, {}, {}, "revealInnocent", "Recommended use with ESP - ON.", 100)
 end
