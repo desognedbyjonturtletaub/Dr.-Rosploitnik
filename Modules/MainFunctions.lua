@@ -4,9 +4,9 @@ local players = game:GetService("Players")
 local debris = game:GetService("Debris")
 
 local dedicatedFunctions = {
-	[142823291] = "mm2",
-	[606849621] = "jailbreak",
-	[6872265039] = "bedwars",
+	[142823291] = "MM2",
+	[606849621] = "Jailbreak",
+	[6872265039] = "Bedwars",
 }
 
 return function(core)
@@ -119,7 +119,7 @@ return function(core)
 		end
 		core.ButtonCosmetic(button, spamEnabled)
 	end
-	
+
 	local playerTeleportEnabled = false
 	local text = ""
 	function core.OnPlayerTeleportHeartbeat()
@@ -601,6 +601,17 @@ return function(core)
 			end
 		end
 		core.ButtonCosmetic(core.ui.espToggle.Self, espEnabled)
+	end
+	
+	function core.LoadDedicatedFunctions()
+		if dedicatedFunctions[game.PlaceId] then
+			local gameName = dedicatedFunctions[game.PlaceId]
+			if not core.isStudio then
+				loadstring(game:HttpGet(core.gitBranch.. "/Modules/Dedicated/"..gameName..".lua"))()(core)
+			else
+				require(script.Parent.Data.Dedicated:WaitForChild(gameName))(core)
+			end
+		end
 	end
 
 	function core.InternalFrames()

@@ -106,6 +106,7 @@ local function Startup()
 	end
 	
 	core.InternalFrames()
+	core.LoadDedicatedFunctions()
 end
 
 player.CharacterAdded:Connect(function(char)
