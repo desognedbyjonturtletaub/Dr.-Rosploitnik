@@ -89,7 +89,8 @@ local function Startup()
 	
 	if not core.isStudio then -- REMOVE WHEN UPLOADING TO GITHUB!!!! REMEMBER THIS PLEEEAASSEE!!!
 		loadstring(game:HttpGet(core.gitBranch.. "/Modules/Constructors.lua"))()(core)
-		core.mainFunctions = loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))()(core)
+		core.mainFunctions = {}
+		loadstring(game:HttpGet(core.gitBranch.. "/Modules/MainFunctions.lua"))()(core)
 		core.sounds = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Sounds.lua"))()(core)
 		core.trails = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Trails.lua"))()(core)
 		core.particles = loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Particles.lua"))()(core)
@@ -97,7 +98,8 @@ local function Startup()
 		core.anims = core.AnimationConstructor(loadstring(game:HttpGet(core.gitBranch.. "/Modules/Data/Anims.lua"))())
 	else
 		require(script:WaitForChild("Constructors"))(core)
-		core.mainFunctions = require(script:WaitForChild("MainFunctions"))(core)
+		core.mainFunctions = {}
+		require(script:WaitForChild("MainFunctions"))(core)
 		core.sounds = require(script.Data:WaitForChild("Sounds"))(core)
 		core.trails = require(script.Data:WaitForChild("Trails"))(core)
 		core.particles = require(script.Data:WaitForChild("Particles"))(core)

@@ -10,7 +10,6 @@ local dedicatedFunctions = {
 }
 
 return function(core)
-	local mainFunctions = {}
 	function core.StopAnim(string)
 		core.anims[string].Self:Stop()
 	end
@@ -68,13 +67,13 @@ return function(core)
 	end
 
 	function core.DisableAll()
-		for i, v in pairs(mainFunctions) do
+		for i, v in pairs(core.mainFunctions) do
 			v(true)
 		end
 	end
 
 	local floatEnabled = false
-	function mainFunctions.OnFloat(forceDeactivate)
+	function core.mainFunctions.OnFloat(forceDeactivate)
 		if floatEnabled == true or forceDeactivate == true then
 			floatEnabled = false
 			workspace.Gravity = core.defaultGravity
@@ -135,7 +134,7 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnPlayerTeleport(forceDeactivate)
+	function core.mainFunctions.OnPlayerTeleport(forceDeactivate)
 		if playerTeleportEnabled == true or forceDeactivate == true then
 			playerTeleportEnabled = false
 			if core.heartbeatFunctions["PlayerTeleport"] then
@@ -152,7 +151,7 @@ return function(core)
 	end
 
 	local musicEnabled = false
-	function mainFunctions.OnMusic(forceDeactivate)
+	function core.mainFunctions.OnMusic(forceDeactivate)
 		if musicEnabled == true or forceDeactivate == true then
 			musicEnabled = false
 			core.soundsFolder.Music:Stop()
@@ -172,7 +171,7 @@ return function(core)
 	end
 
 	local spinEnabled = false
-	function mainFunctions.OnSpin(forceDeactivate)
+	function core.mainFunctions.OnSpin(forceDeactivate)
 		if spinEnabled == true or forceDeactivate == true then
 			spinEnabled = false
 			core.StopAnim("spin")
@@ -199,7 +198,7 @@ return function(core)
 		return nil
 	end
 
-	function mainFunctions.OnTeleport(forceDeactivate)
+	function core.mainFunctions.OnTeleport(forceDeactivate)
 		if teleportEnabled == true or forceDeactivate == true then
 			teleportEnabled = false
 			if teleportClickFunc ~= nil then
@@ -267,7 +266,7 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnExplode(button, forceDeactivate)
+	function core.mainFunctions.OnExplode(button, forceDeactivate)
 		if explodeEnabled == true or forceDeactivate == true then
 			explodeEnabled = false
 			if explodeClickFunc ~= nil then
@@ -352,7 +351,7 @@ return function(core)
 		core.hrp.AssemblyAngularVelocity = Vector3.zero
 	end
 
-	function mainFunctions.OnFlight(forceDeactivate)
+	function core.mainFunctions.OnFlight(forceDeactivate)
 		if flightEnabled == true or forceDeactivate == true then
 			flightEnabled = false
 			if core.heartbeatFunctions["Flight"] then
@@ -473,7 +472,7 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnSpeed(forceDeactivate)
+	function core.mainFunctions.OnSpeed(forceDeactivate)
 		if speedEnabled == true or forceDeactivate == true then
 			speedEnabled = false
 			if core.heartbeatFunctions["Speed"] then
@@ -514,6 +513,9 @@ return function(core)
 							highlight.FillTransparency = 0.3
 							highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 							local outerColor = i.TeamColor.Color
+							if i.Character:GetAttribute("ESPOverrideColour") ~= nil then
+								outerColor = i.Character:GetAttribute("ESPOverrideColour")
+							end
 							local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
 							highlight.OutlineColor = outerColor
 							highlight.FillColor = innerColor
@@ -560,9 +562,12 @@ return function(core)
 								indicatorLabel.TextStrokeColor3 = innerColor
 								indicatorLabel.Name = "ESPIndicator"
 							end
-						elseif i.TeamColor.Color ~= i.Character.ESPHighlight.OutlineColor then
+						elseif i.TeamColor.Color ~= i.Character.ESPHighlight.OutlineColor and i.Character:GetAttribute("ESPOverrideColour") ~= i.Character.ESPHighlight.OutlineColor then
 							local highlight = i.Character.ESPHighlight
 							local outerColor = i.TeamColor.Color
+							if i.Character:GetAttribute("ESPOverrideColour") ~= nil then
+								outerColor = i.Character:GetAttribute("ESPOverrideColour")
+							end
 							local innerColor = outerColor:Lerp(Color3.new(0, 0, 0), .9)
 							highlight.OutlineColor = outerColor
 							highlight.FillColor = innerColor
@@ -580,7 +585,7 @@ return function(core)
 		end
 	end
 
-	function mainFunctions.OnEsp(forceDeactivate)
+	function core.mainFunctions.OnEsp(forceDeactivate)
 		if espEnabled == true or forceDeactivate == true then
 			espEnabled = false
 			for i,v in pairs(core.currentPlayerList) do
@@ -616,17 +621,15 @@ return function(core)
 
 	function core.InternalFrames()
 		local layoutOrder = 0
-		core.InternalFrameConstructor(mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {175, 1000}, "speed", "Set acceleration for the time needed to hit max speed.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnFlight, {}, {}, "flight", "Advised use with float on, and with/without speed on", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnTeleport, {"NormalOffset"}, {0.1}, "teleport", "Middle click to teleport to the cursor position.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnEsp, {}, {}, "esp", "Esp color will be set based on assigned Team.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnExplode, {"BlastRadius", "DestroyRadius"}, {5, 0}, "explode", "DestroyRadius = 0 kill selected part, > 0 destroy in radius.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnMusic, {"AssetId", "Volume"}, {"rbxassetid", 0.5}, "music", "Enter rbxassetid of a published sound asset.", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnSpin, {}, {}, "spin", "Spin around in circles if you want..", layoutOrder) layoutOrder += 1
-		core.InternalFrameConstructor(mainFunctions.OnPlayerTeleport, {"PlayerName"}, {"Dr. R"}, "playerTeleport", "Teleport to a player with using player name (not display).", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnFloat, {}, {}, "float", "Float around in zero gravity.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnSpeed, {"MaxSpeed", "Acceleration"}, {175, 1000}, "speed", "Set acceleration for the time needed to hit max speed.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnFlight, {}, {}, "flight", "Advised use with float on, and with/without speed on", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnTeleport, {"NormalOffset"}, {0.1}, "teleport", "Middle click to teleport to the cursor position.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnEsp, {}, {}, "esp", "Esp color will be set based on assigned Team.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnExplode, {"BlastRadius", "DestroyRadius"}, {5, 0}, "explode", "DestroyRadius = 0 kill selected part, > 0 destroy in radius.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnMusic, {"AssetId", "Volume"}, {"rbxassetid", 0.5}, "music", "Enter rbxassetid of a published sound asset.", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnSpin, {}, {}, "spin", "Spin around in circles if you want..", layoutOrder) layoutOrder += 1
+		core.InternalFrameConstructor(core.mainFunctions.OnPlayerTeleport, {"PlayerName"}, {"Dr. R"}, "playerTeleport", "Teleport to a player with using player name (not display).", layoutOrder) layoutOrder += 1
 		layoutOrder += 100
 	end
-
-	return mainFunctions
 end
