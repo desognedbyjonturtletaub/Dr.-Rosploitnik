@@ -2,6 +2,7 @@ local players = game:GetService("Players")
 
 return function(core)
 	function core.mainFunctions.OnRevealNonInnocent(forceDeactivate)
+		print("Reveal non-innocent")
 		local allPlayers = players:GetChildren()
 		for i = 1, #allPlayers do
 			local player = allPlayers[i]
