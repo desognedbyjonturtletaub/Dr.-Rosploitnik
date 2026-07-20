@@ -62,7 +62,6 @@ end
 
 local function Startup()
 	print("START UP!!!")
-	
 	core.gitBranch = "https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/v0.1.0"
 	core.player = players.LocalPlayer
 	core.playerGui = player.PlayerGui
