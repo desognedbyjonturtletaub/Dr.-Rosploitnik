@@ -1,0 +1,113 @@
+return function(core)
+	return {
+		explosion1 = {
+			Name = "Explosion1",
+			Brightness = 1,
+			Size = NumberSequence.new(5),
+			LightEmission = 0,
+			Orientation = Enum.ParticleOrientation.FacingCamera,
+			Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(135,135,135)), 
+				ColorSequenceKeypoint.new(0.49, Color3.fromRGB(135,135,135)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(255,255,255)),  ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))},
+			Texture = "rbxassetid://8734114950",
+			Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.387, 0), NumberSequenceKeypoint.new(1, 1)},
+			Lifetime = NumberRange.new(0.5),
+			Speed = NumberRange.new(3),
+			Rate = 35,
+			EmissionDirection = Enum.NormalId.Top,
+			Rotation = NumberRange.new(5),
+			FlipbookLayout = Enum.ParticleFlipbookLayout.Grid8x8,
+			FlipbookBlendFrames = true,
+			FlipbookMode = Enum.ParticleFlipbookMode.OneShot,
+			FlipbookStartRandom = false,
+			Misc = {
+				parentedType = "Part",
+				partSize = Vector3.new(18, 18, 18),
+				emitCount = 8,
+			}
+		},
+		explosion2 = {
+			Name = "Explosion2",
+			Brightness = 1,
+			Size = NumberSequence.new(1),
+			LightEmission = 0,
+			Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
+				ColorSequenceKeypoint.new(0.49, Color3.fromRGB(255,255,255)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(84,84,84)), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))},
+			Orientation = Enum.ParticleOrientation.FacingCamera,
+			Texture = "rbxassetid://8733226116",
+			Lifetime = NumberRange.new(0.75),
+			Rate = 50,
+			Speed = NumberRange.new(3),
+			EmissionDirection = Enum.NormalId.Top,
+			Rotation = NumberRange.new(0),
+			FlipbookLayout = Enum.ParticleFlipbookLayout.Grid4x4,
+			FlipbookBlendFrames = true,
+			FlipbookMode = Enum.ParticleFlipbookMode.OneShot,
+			FlipbookStartRandom = false,
+			Misc = {
+				parentedType = "Part",
+				partSize = Vector3.new(18, 18, 18),
+				emitCount = 8,
+			}
+		},
+		speed1 = {
+			Name = "Speed1",
+			Brightness = .8,
+			LightEmission = 1,
+			LightInfluence = 0,
+			Orientation = Enum.ParticleOrientation.VelocityParallel,
+			Size = NumberSequence.new(0.75),
+			Squash = NumberSequence.new{NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(1, -2.2)},
+			Texture = "rbxassetid://14196884170",
+			Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(0.31, 1), NumberSequenceKeypoint.new(0.52, 0.712), NumberSequenceKeypoint.new(1, 1)},
+			ZOffset = 0,
+			Lifetime = NumberRange.new(0.25),
+			EmissionDirection = Enum.NormalId.Top,
+			Rate = 1000,
+			Rotation = NumberRange.new(0),
+			Speed = NumberRange.new(20),
+			SpreadAngle = Vector2.new(0, 360),
+			Acceleration = Vector3.new(0, 0, 150),
+			LockedToPart = true,
+			Misc = {
+				parentedType = "Attachment",
+				attachmentParent = "Hrp",
+			}
+		},
+		shockwave1 = {
+			Name = "Shockwave1",
+			Brightness = 1,
+			LightEmission = 1,
+			LightInfluence = 0,
+			Orientation = Enum.ParticleOrientation.VelocityPerpendicular,
+			Size = NumberSequence.new{NumberSequenceKeypoint.new(0,0), NumberSequenceKeypoint.new(0.62, 10), NumberSequenceKeypoint.new(1, 17)},
+			Texture = "rbxassetid://12363806228",
+			Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(.8, .7), NumberSequenceKeypoint.new(1, 1)},
+			Lifetime = NumberRange.new(0.25),
+			Speed = NumberRange.new(0.1),
+			EmissionDirection = Enum.NormalId.Front,
+			Misc = {
+				emitCount = 1
+			}
+		},
+		teleport1 = {
+			Name = "Teleport1",
+			Brightness = 25,
+			LightEmission = 0,
+			LightInfluence = 0,
+			Color = ColorSequence.new(Color3.fromRGB(0,0,0)),
+			Orientation = Enum.ParticleOrientation.FacingCamera,
+			Squash = NumberSequence.new{NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(1, 1.5)},
+			Size = NumberSequence.new(2),
+			Texture = "rbxassetid://12363816837",
+			Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(1, 1)},
+			Lifetime = NumberRange.new(0.1),
+			Speed = NumberRange.new(0.01),
+			Rotation = NumberRange.new(0),
+			EmissionDirection = Enum.NormalId.Front,
+			LockedToPart = false,
+			Misc = {
+				emitCount = 8
+			}
+		},
+	}
+end

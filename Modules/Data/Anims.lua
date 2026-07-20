@@ -11,4 +11,8 @@ return {
 		Self = nil,
 		Id = "rbxassetid://123393210843929"
 	},
+	spin = {
+		Self = nil,
+		Id = "rbxassetid://110792133024438"
+	},
 }

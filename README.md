@@ -1,9 +1,13 @@
 <p align="center">
-  <img src="Images//DrRosploitnik.png" alt="Dr Rosploitnik Banner" width="100%">
+  <img src="Images//DrRosploitnikAnimated.gif" alt="Dr Rosploitnik Banner" width="100%">
 </p>
 <h2 align="centre">
    Dr. Rosploitnik </h2>
   An all purpose Roblox client-sided script that will meet all your Ro-sploiting needs. - Dr. Rosploitnik (2026)
+  <br>
+  Made for educational purposes
+  <br>
+  Not liable for any repercussions!
 </h2>
 
 
@@ -19,7 +23,7 @@
 1. Download the "specific scripting application" of your choice.
 2. Execute the loadstring that is provided down below.
 ```luau
-loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/main/Main.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtletaub/Dr.-Rosploitnik/v0.1.0/Main.lua", true))()
 ````
 ## Developers & Credits
 [``Desognedby``](https://github.com/desognedbyjonturtletaub)   - Joint Account, Repo Holder
@@ -31,12 +35,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/desognedbyjonturtleta
 <h2>Previews:</h2>
 
 <table border="0">
-  <!-- TOP ROW -->
   <tr>
     <td><img src="Previews/Screen2.png" width="100%"></td>
   </tr>
-  <!-- BOTTOM ROW -->
   <tr>
+    <td><img src="Previews/Screen4.png" width="100%"></td>
+  </tr>
+    <tr>
     <td><img src="Previews/Screen5.png" width="100%"></td>
   </tr>
 </table>
